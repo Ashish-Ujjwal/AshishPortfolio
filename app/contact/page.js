@@ -7,7 +7,7 @@ const Index = () => {
 	const { banner_image_function, page_info_function } = useContext(context);
 	useEffect(() => {
 		page_info_function(
-			"Have a question?    <br>Let's Get in Touch    ",
+			"Have a question?    <br>Get in Touch    ",
 			"contact",
 			"contact"
 		);

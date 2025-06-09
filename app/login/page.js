@@ -1,65 +1,95 @@
-// /app/login/page.tsx (Next.js 13+ App Router)
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
-import { Lock, Mail } from "lucide-react";
-import Layout from "@/layout/Layout";
+import { useState, useContext, useEffect } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
+import { context } from '@/context/context';
+import Layout from '@/layout/Layout';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const { page_info_function } = useContext(context);
+
+  useEffect(() => {
+    page_info_function("Login Now <br>Access Portal", "login", "login");
+  }, []);
 
   const handleLogin = () => {
-    if (email === "admin@example.com" && password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
-      router.push("/admin");
-    } else {
-      alert("Invalid credentials");
-    }
+    console.log('Logging in:', { email, password });
   };
 
   return (
-    <Layout noSidebar>
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-200 via-purple-200 to-pink-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 p-4">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md"
-      >
-        <Card className="shadow-2xl border border-gray-200 dark:border-gray-700 rounded-2xl">
-          <CardContent className="p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-center text-indigo-600 dark:text-indigo-400">Welcome Back</h2>
-            <p className="text-center text-sm text-gray-500 dark:text-gray-400">Login to access your admin dashboard</p>
-            <div className="relative">
-              <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-              <Input
+    <Layout>
+      <div className="min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4 rounded-xl">
+        <div className="bg-[#303746] rounded-xl p-8 max-w-md w-full shadow-lg">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-6">
+            Sign in to your account
+          </h2>
+            {/* <div className="text-red-500 text-xl font-bold">Tailwind is working!</div> */}
+
+          <div className="space-y-4">
+            {/* Email Field */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-white mb-1">
+                Email Address
+              </label>
+              <input
+                id="email"
                 type="email"
-                placeholder="Email"
-                className="pl-10"
+                placeholder="Enter your Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2 rounded-md border border-gray-600 bg-transparent text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 outline-none"
               />
             </div>
-            <div className="relative">
-              <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-              <Input
-                type="password"
-                placeholder="Password"
-                className="pl-10"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+
+            {/* Password Field */}
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-white mb-1">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Enter your Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2 rounded-md border border-gray-600 bg-transparent text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 outline-none pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-2 flex items-center text-gray-400"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
             </div>
-            <Button onClick={handleLogin} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-xl">Login</Button>
-          </CardContent>
-        </Card>
-      </motion.div>
-    </div>
+
+            {/* Options */}
+            <div className="flex items-center justify-between text-sm text-gray-300">
+              <label className="flex items-center gap-2">
+                <input type="checkbox" className="accent-indigo-500" />
+                Remember me
+              </label>
+              <a href="#" className="text-blue-500 hover:underline">
+                Forgot password?
+              </a>
+            </div>
+
+            {/* Login Button */}
+            <button
+              onClick={handleLogin}
+              className="w-full py-2.5 mt-2 rounded-md bg-gradient-to-r from-green-400 via-purple-400 to-pink-500 text-white font-semibold hover:opacity-90 transition"
+            >
+              Sign in
+            </button>
+          </div>
+        </div>
+      </div>
+
     </Layout>
   );
 }

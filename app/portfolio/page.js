@@ -1,95 +1,94 @@
-"use client";
-import { context } from "@/context/context";
-import Layout from "@/layout/Layout";
-import { useContext, useEffect } from "react";
+'use client';
 
-const portfolioItems = [
-	{
-		id: 1,
-		title: "Movie Recommendation", 
-		img: "/img/AshPortfolio/MovieDB.png",
-		liveLink: "https://recommendation-engine-movie-web.vercel.app",
-		githubLink: "https://github.com/AshishUjjwal/Recommendation_Engine_Movie_Web"
-	},
-	{
-		id: 2, img: "/img/AshPortfolio/Chatapp.png", 
-		title: "Chat App",
-		liveLink: "https://github.com/Ashish-Ujjwal/Social-Trends",
-		githubLink: "https://github.com/Ashish-Ujjwal/Social-Trends"
-	},
-	{
-		id: 3, img: "/img/AshPortfolio/FaceRecogn.png", 
-		title: "FaceRecognition",
-		liveLink: "https://your-live-site.com",
-		githubLink: "https://github.com/yourusername/repo"
-	},
-	{
-		id: 4, img: "/img/AshPortfolio/HealthPlus.png", 
-		title: "Health Plus",
-		liveLink: "https://ashishujjwal.github.io/Health-Plus/",
-		githubLink: "https://github.com/AshishUjjwal/Health-Plus"
-	},
-	{
-		id: 5, img: "/img/AshPortfolio/ExpenseTracker.jpg", 
-		title: "Expense Tracker",
-		liveLink: "https://github.com/AshishUjjwal/Expense_Tracker",
-		githubLink: "https://github.com/AshishUjjwal/Expense_Tracker"
-	},
-	{
-		id: 6, img: "/img/AshPortfolio/SocialMedia.jpg", 
-		title: "Social Trends",
-		liveLink: "https://github.com/Ashish-Ujjwal/Social-Trends",
-		githubLink: "https://github.com/Ashish-Ujjwal/Social-Trends"
-	},
-	{
-		id: 7, img: "/img/AshPortfolio/MLSAAIMT.png", 
-		title: "Microsoft LSA AIMT",
-		liveLink: "https://microsoft-lsa-aimt.vercel.app",
-		githubLink: "https://github.com/AshishUjjwal/Microsoft-LSA-AIMT"
-	},
-	{
-		id: 8, img: "/img/AshPortfolio/DigitalAssects.png", 
-		title: "Digital MarketPlace",
-		liveLink: "https://digital-assects-market-place.vercel.app",
-		githubLink: "https://github.com/Ashish-Ujjwal/Digital-Assects-MarketPlace"
-	},
-];
+import { useContext, useEffect, useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
+import { context } from '@/context/context';
+import Layout from '@/layout/Layout';
 
-const Index = () => {
-	const { banner_image_function, page_info_function } = useContext(context);
-	useEffect(() => {
-		banner_image_function("/img/banner2.png");
-		page_info_function("Recent projects", "portfolio", "portfolio");
-	}, []);
-	return (
-		<Layout>
-			<div className="row">
-				{portfolioItems.map((item) => (
-					<div className="col-lg-6" key={item.id}>
-						{/* portfolio item */}
-						<a
-							data-fancybox="portfolio"
-							href={item.img}
-							className="trm-portfolio-item trm-scroll-animation"
-							data-scroll
-							data-scroll-offset={40}
-							data-cat="icon"
-						>
-							<div className="trm-cover-frame">
-								<img className="trm-cover" src={item.img} alt="item" />
-							</div>
-							<div className="trm-item-description">
-								<h6>{item.title}</h6>
-								<div className="trm-zoom-icon">
-									<i className="fas fa-search-plus" />
-								</div>
-							</div>
-						</a>
-						{/* portfolio item end */}
-					</div>
-				))}
-			</div>
-		</Layout>
-	);
-};
-export default Index;
+export default function LoginPageStyled() {
+  const { page_info_function } = useContext(context);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    page_info_function("Login Now <br>Access Portal", "login", "login");
+  }, []);
+
+  const handleLogin = () => {
+    console.log("Logging in with:", { email, password });
+  };
+
+  return (
+    <Layout>
+      <div className="min-h-screen flex items-center justify-center bg-white px-4">
+        <div className="w-full max-w-md bg-white border border-gray-200 shadow-lg rounded-xl p-8 space-y-6">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-gray-800">Sign in to your account</h2>
+          </div>
+
+          <div className="space-y-4">
+            {/* Email Field */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                placeholder="Enter your Email"
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-800"
+              />
+            </div>
+
+            {/* Password Field */}
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  value={password}
+                  placeholder="Enter your Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-800 pr-10"
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            {/* Options Row */}
+            <div className="flex items-center justify-between text-sm text-gray-600">
+              <label className="flex items-center gap-2">
+                <input type="checkbox" className="accent-indigo-600" />
+                Remember me
+              </label>
+              <a href="#" className="text-indigo-600 hover:underline">
+                Forgot password?
+              </a>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              onClick={handleLogin}
+              className="w-full py-2.5 bg-gradient-to-r from-green-400 to-pink-500 text-white font-semibold rounded-md hover:opacity-90 transition"
+            >
+              Sign in
+            </button>
+          </div>
+        </div>
+      </div>
+    </Layout>
+  );
+}
