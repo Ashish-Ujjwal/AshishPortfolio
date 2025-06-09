@@ -1,11 +1,11 @@
 <div align='center'>
 
-<h1>Next.js project</h1>
+<h1>Ashish Next.js Porfolio Project</h1>
 <p>Immerse yourself in the captivating world of my Next.js portfolio, where dynamic web development meets stunning design.</p>
 
 <p>Explore my portfolio, crafted with precision using Next.js, a powerful React framework. Immerse yourself in a seamless browsing experience that not only showcases my expertise as a frontend developer but also highlights the versatility and performance offered by Next.js, ensuring a dynamic and user-friendly presentation of my work and skills.</p>
 
-<h4> <a href=https://nextjs-tailwind-mailchimp.vercel.app/>View Demo</a> <span> · </span> <a href="https://github.com/codelikeagirl29/trueman/blob/master/README.md"> Documentation </a> <span> · </span> <a href="https://github.com/codelikeagirl29/trueman/issues"> Report Bug </a> <span> · </span> <a href="https://github.com/codelikeagirl29/trueman/issues"> Request Feature </a> </h4>
+<h4> <a href=https://ashish-portfolio-lac.vercel.app>View Demo</a> <span> · </span> <a href="https://github.com/Ashish-Ujjwal/AshishPortfolio/blob/master/README.md"> Documentation </a> <span> · </span> <a href="https://github.com/Ashish-Ujjwal/AshishPortfolio/issues"> Report Bug </a> <span> · </span> <a href="https://github.com/Ashish-Ujjwal/AshishPortfolio/issues"> Request Feature </a> </h4>
 
 
 </div>
@@ -19,7 +19,11 @@
 ## :star2: About the Project
 
 ### :camera: Screenshots
-<div align="center"> <a href="https://nextjs-tailwind-mailchimp.vercel.app/"><img src="https://res.cloudinary.com/codelikeagirl29/image/upload/v1709657279/trueman_apl8mo.png" alt='image' width='800'/></a> </div>
+<div align="center">
+  <a href="https://nextjs-tailwind-mailchimp.vercel.app/">
+    <img src="https://github.com/Ashish-Ujjwal/AshishPortfolio/raw/main/public/img/ScreenShot.png" alt="Screenshot" width="800"/>
+  </a>
+</div>
 
 
 
