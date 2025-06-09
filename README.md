@@ -28,12 +28,20 @@
 
 
 ### :art: Color Reference
-| Color | Hex |
+<!-- | Color | Hex |
 | --------------- | ---------------------------------------------------------------- |
 | Primary Color | ![#ff4162](https://via.placeholder.com/10/ff4162?text=+) #ff4162 |
 | Secondary Color | ![#f20b97](https://via.placeholder.com/10/f20b97?text=+) #f20b97 |
 | Accent Color | ![#00283a](https://via.placeholder.com/10/00283a?text=+) #00283a |
-| Text Color | ![#7b7b7d](https://via.placeholder.com/10/7b7b7d?text=+) #7b7b7d |
+| Text Color | ![#7b7b7d](https://via.placeholder.com/10/7b7b7d?text=+) #7b7b7d | -->
+
+| Color Name      | Preview                                                         | Hex Code  |
+| --------------- | --------------------------------------------------------------- | --------- |
+| Primary Color   | ![#ff4162](https://via.placeholder.com/15/ff4162/000000?text=+) | `#ff4162` |
+| Secondary Color | ![#f20b97](https://via.placeholder.com/15/f20b97/000000?text=+) | `#f20b97` |
+| Accent Color    | ![#00283a](https://via.placeholder.com/15/00283a/000000?text=+) | `#00283a` |
+| Text Color      | ![#7b7b7d](https://via.placeholder.com/15/7b7b7d/000000?text=+) | `#7b7b7d` |
+
 
 ### :key: Environment Variables
 To run this project, you will need to add the following environment variables to your .env file
