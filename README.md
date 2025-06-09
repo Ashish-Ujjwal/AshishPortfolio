@@ -35,12 +35,13 @@
 | Accent Color | ![#00283a](https://via.placeholder.com/10/00283a?text=+) #00283a |
 | Text Color | ![#7b7b7d](https://via.placeholder.com/10/7b7b7d?text=+) #7b7b7d | -->
 
-| Color Name      | Preview                                                         | Hex Code  |
-| --------------- | --------------------------------------------------------------- | --------- |
-| Primary Color   | ![#ff4162](https://via.placeholder.com/15/ff4162/000000?text=+) | `#ff4162` |
-| Secondary Color | ![#f20b97](https://via.placeholder.com/15/f20b97/000000?text=+) | `#f20b97` |
-| Accent Color    | ![#00283a](https://via.placeholder.com/15/00283a/000000?text=+) | `#00283a` |
-| Text Color      | ![#7b7b7d](https://via.placeholder.com/15/7b7b7d/000000?text=+) | `#7b7b7d` |
+| Color Name      | Preview                                                                                                            | Hex Code  |
+| --------------- | ------------------------------------------------------------------------------------------------------------------ | --------- |
+| Primary Color   | <img src="https://via.placeholder.com/15/ff4162/ff4162.png" width="15" height="15" style="border:1px solid #ccc"/> | `#ff4162` |
+| Secondary Color | <img src="https://via.placeholder.com/15/f20b97/f20b97.png" width="15" height="15" style="border:1px solid #ccc"/> | `#f20b97` |
+| Accent Color    | <img src="https://via.placeholder.com/15/00283a/00283a.png" width="15" height="15" style="border:1px solid #ccc"/> | `#00283a` |
+| Text Color      | <img src="https://via.placeholder.com/15/7b7b7d/7b7b7d.png" width="15" height="15" style="border:1px solid #ccc"/> | `#7b7b7d` |
+
 
 
 ### :key: Environment Variables
