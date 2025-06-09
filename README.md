@@ -19,7 +19,7 @@
 ## :star2: About the Project
 
 ### :camera: Screenshots
-<div align="center"> <a href="https://nextjs-tailwind-mailchimp.vercel.app/"><img src="https://res.cloudinary.com/codelikeagirl29/image/upload/v1709657279/trueman_apl8mo.png" alt='image' width='800'/></a> </div>
+<div align="center"> <a href="https://nextjs-tailwind-mailchimp.vercel.app/"><img src="[https://res.cloudinary.com/codelikeagirl29/image/upload/v1709657279/trueman_apl8mo.png](https://github.com/Ashish-Ujjwal/AshishPortfolio/blob/main/public/img/ScreenShot.png)" alt='image' width='800'/></a> </div>
 
 
 
