@@ -19,7 +19,12 @@
 ## :star2: About the Project
 
 ### :camera: Screenshots
-<div align="center"> <a href="https://nextjs-tailwind-mailchimp.vercel.app/"><img src="[https://github.com/Ashish-Ujjwal/AshishPortfolio/blob/main/public/img/ScreenShot.png](https://github.com/Ashish-Ujjwal/AshishPortfolio/blob/main/public/img/ScreenShot.png)" alt='image' width='800'/></a> </div>
+<div align="center">
+  <a href="https://nextjs-tailwind-mailchimp.vercel.app/">
+    <img src="https://github.com/Ashish-Ujjwal/AshishPortfolio/raw/main/public/img/ScreenShot.png" alt="Screenshot" width="800"/>
+  </a>
+</div>
+
 
 
 
