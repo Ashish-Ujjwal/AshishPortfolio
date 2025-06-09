@@ -21,12 +21,11 @@ export default function LoginPage() {
 
   return (
     <Layout>
-      <div className="min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4 rounded-xl">
+      <div className="min-h-[72vh] flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4 rounded-xl">
         <div className="bg-[#303746] rounded-xl p-8 max-w-md w-full shadow-lg">
           <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-6">
             Sign in to your account
           </h2>
-            {/* <div className="text-red-500 text-xl font-bold">Tailwind is working!</div> */}
 
           <div className="space-y-4">
             {/* Email Field */}
