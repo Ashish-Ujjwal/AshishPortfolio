@@ -112,7 +112,7 @@ const TopBar = ({ onePage }) => {
 									</li>
 									<li className="menu-item-has-children">
 										<Link legacyBehavior href="">
-											login/Admin
+											Admin
 										</Link>
 										<ul>
 											<li>
