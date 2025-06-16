@@ -70,7 +70,6 @@ const Image = ({ banner_image }) => {
 								<div className="trm-label trm-mb-20">Hi my friend!</div>
 								<h1 className="trm-mb-30">Building Digital MarketPlaces</h1>
 							</div>
-							{/* hii */}
 
 							<a
 								href="#about-triger"

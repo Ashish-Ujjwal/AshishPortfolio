@@ -110,10 +110,22 @@ const TopBar = ({ onePage }) => {
 											</li>
 										</ul> */}
 									</li>
-									<li>
-										<Link legacyBehavior href="login">
-											login
+									<li className="menu-item-has-children">
+										<Link legacyBehavior href="">
+											login/Admin
 										</Link>
+										<ul>
+											<li>
+												<Link legacyBehavior href="login">
+													Login
+												</Link>
+											</li>
+											<li>
+												<Link legacyBehavior href="admin">
+													Admin
+												</Link>
+											</li>
+										</ul>
 									</li>
 								</ul>
 							)}

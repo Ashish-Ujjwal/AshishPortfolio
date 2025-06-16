@@ -36,15 +36,6 @@ const SideBar = () => {
 					{/* sidebar social */}
 					<div className="trm-social">
 
-						<a href="https://github.com/AshishUjjwal" target="_blank" rel="noopener noreferrer" style={{ marginRight: '10px' }}>
-							<img
-								src="https://img.icons8.com/?size=100&id=SzgQDfObXUbA&format=png&color=000000"
-								alt="GitHub"
-								width="20"
-								height="20"
-								style={{ verticalAlign: 'middle' }}
-							/>
-						</a>
 						<a href="https://www.linkedin.com/in/ashish-ujjwal-a9bb03228/" target="_blank" rel="noopener noreferrer">
 							<img
 								src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
@@ -54,7 +45,18 @@ const SideBar = () => {
 								style={{ verticalAlign: 'middle' }}
 							/>
 						</a>
-						{/* <a href="https://x.com/ASHISHUJJW6676" target="_blank" rel="noopener noreferrer" style={{ marginRight: '10px' }}>
+
+						<a href="https://github.com/AshishUjjwal" target="_blank" rel="noopener noreferrer" style={{ marginRight: '10px' }}>
+							<img
+								src="https://img.icons8.com/?size=100&id=SzgQDfObXUbA&format=png&color=000000"
+								alt="GitHub"
+								width="20"
+								height="20"
+								style={{ verticalAlign: 'middle' }}
+							/>
+						</a>
+						
+						<a href="https://x.com/ASHISHUJJW6676" target="_blank" rel="noopener noreferrer" style={{ marginRight: '10px' }}>
 							<img
 								src="https://img.icons8.com/?size=100&id=bG29Ckcdp6YP&format=png&color=000000"
 								alt="Twitter"
@@ -62,21 +64,23 @@ const SideBar = () => {
 								height="20"
 								style={{ verticalAlign: 'middle' }}
 							/>
-						</a> */}
+						</a>
 
-						<a href="https://leetcode.com/u/Ashish_Ujjwal/" target="_blank" rel="noopener noreferrer" style={{ marginRight: '10px' }}>
+						
+						<a href="https://www.geeksforgeeks.org/user/ashishfrommohania/" target="_blank" rel="noopener noreferrer" style={{ marginRight: '10px' }}>
 							<img
-								src="https://img.icons8.com/?size=100&id=wDGo581Ea5Nf&format=png&color=000000"
-								alt="LeetCode"
+								src="https://img.icons8.com/?size=100&id=AbQBhN9v62Ob&format=png&color=000000"
+								alt="GeeksforGeeks"
 								width="20"
 								height="20"
 								style={{ verticalAlign: 'middle' }}
 							/>
 						</a>
-						<a href="https://www.geeksforgeeks.org/user/ashishfrommohania/" target="_blank" rel="noopener noreferrer" style={{ marginRight: '10px' }}>
+
+						<a href="https://leetcode.com/u/Ashish_Ujjwal/" target="_blank" rel="noopener noreferrer" style={{ marginRight: '10px' }}>
 							<img
-								src="https://img.icons8.com/?size=100&id=AbQBhN9v62Ob&format=png&color=000000"
-								alt="GeeksforGeeks"
+								src="https://img.icons8.com/?size=100&id=wDGo581Ea5Nf&format=png&color=000000"
+								alt="LeetCode"
 								width="20"
 								height="20"
 								style={{ verticalAlign: 'middle' }}
