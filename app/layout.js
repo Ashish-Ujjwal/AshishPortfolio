@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
 								className="trm-scroll-container"
 								style={{ opacity: 0 }}
 							>
-								{children}
+							{children}
 							</div>
 						</div>
 					</div>
