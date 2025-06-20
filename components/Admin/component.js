@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import { FaEdit, FaTrash, FaSave, FaTimes } from "react-icons/fa";
+
+
 // Shared styles object
 const styles = {
   // Overall container for the entire admin panel
@@ -177,255 +181,334 @@ const styles = {
 
 // --- Section Components (Moved from renderContent switch cases) ---
 
-const DashboardContent = ({ projects, skills, employmentHistory, testimonials, blogs, styles }) => (
-  <div style={styles.contentSection}>
-    <h3 style={styles.contentSectionTitle}>Dashboard Overview</h3>
-    <p style={{ color: '#666', marginBottom: '1rem' }}>Welcome to your admin dashboard. Here's a quick summary of your site's key activities and performance metrics.</p>
-    <ul style={styles.contentList}>
-      <li><strong>Total Projects:</strong> {projects.length}</li>
-      <li><strong>Total Skills:</strong> {skills.length}</li>
-      <li><strong>Employment Entries:</strong> {employmentHistory.length}</li>
-      <li><strong>Testimonials:</strong> {testimonials.length} ({testimonials.filter(t => !t.approved).length} pending)</li>
-      <li><strong>Blog Posts:</strong> {blogs.length} ({blogs.filter(b => !b.published).length} drafts)</li>
-    </ul>
+const DashboardContent = ({ projects, skills, employmentHistory, testimonials, blogs }) => (
+  <div style={{ width: '100%', padding: '1.5rem', backgroundColor: '#f9fafb', borderRadius: '0.75rem', boxShadow: '0 2px 6px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    <h3 style={{ fontSize: '1.75rem', fontWeight: 600, color: '#2d3748' }}>📊 Dashboard Overview</h3>
+    <p style={{ fontSize: '1rem', color: '#4a5568' }}>Welcome to your admin dashboard. Below is a detailed summary of your site's key activities and entries.</p>
+
+    {/* Projects */}
+    <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600, color: '#2d3748' }}>📁 Projects ({projects.length})</h4>
+      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', color: '#4a5568', listStyle: 'disc' }}>
+        {projects.map((p, i) => (
+          <li key={i}><strong>{p.title}</strong> — {p.description?.slice(0, 60) || 'No description provided'}...</li>
+        ))}
+      </ul>
+    </div>
+
+    {/* Skills */}
+    <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600, color: '#2d3748' }}>🛠️ Skills ({skills.length})</h4>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', fontSize: '0.95rem', color: '#4a5568' }}>
+        {skills.map((s, i) => (
+          <span key={i} style={{ backgroundColor: '#edf2f7', padding: '0.25rem 0.75rem', borderRadius: '9999px' }}>{s.name}</span>
+        ))}
+      </div>
+    </div>
+
+    {/* Employment History */}
+    <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600, color: '#2d3748' }}>🏢 Employment History ({employmentHistory.length})</h4>
+      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', color: '#4a5568', listStyle: 'disc' }}>
+        {employmentHistory.map((job, i) => (
+          <li key={i}>
+            <strong>{job.role}</strong> at <em>{job.company}</em> ({job.startDate} to {job.endDate || 'Present'})
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {/* Testimonials */}
+    <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600, color: '#2d3748' }}>💬 Testimonials ({testimonials.length})</h4>
+      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', color: '#4a5568', listStyle: 'disc' }}>
+        {testimonials.map((t, i) => (
+          <li key={i}><strong>{t.name}</strong>: {t.message?.slice(0, 60) || 'No message'}... {t.approved ? '✅ Approved' : '⏳ Pending'}</li>
+        ))}
+      </ul>
+    </div>
+
+    {/* Blogs */}
+    <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600, color: '#2d3748' }}>📝 Blog Posts ({blogs.length})</h4>
+      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', color: '#4a5568', listStyle: 'disc' }}>
+        {blogs.map((b, i) => (
+          <li key={i}>
+            <strong>{b.title}</strong> — {b.published ? '📢 Published' : '📝 Draft'} | {b.createdAt || 'No date'}
+          </li>
+        ))}
+      </ul>
+    </div>
   </div>
 );
 
-const ProjectsContent = ({ projects, setProjects, newProjectName, setNewProjectName, newProjectStatus, setNewProjectStatus, editingProject, setEditingProject, addProject, updateProject, deleteProject, styles, setShowModal, setModalContent }) => (
-  <div style={styles.contentSection}>
-    <h3 style={styles.contentSectionTitle}>Projects Management</h3>
-    {/* Add Project Form */}
-    <div style={styles.formGroup}>
-      <label htmlFor="newProjectName" style={styles.label}>Project Name</label>
-      <input
-        id="newProjectName"
-        type="text"
-        placeholder="Enter project name"
-        value={newProjectName}
-        onChange={(e) => setNewProjectName(e.target.value)}
-        style={styles.input}
-      />
-    </div>
-    <div style={styles.formGroup}>
-      <label htmlFor="newProjectStatus" style={styles.label}>Status</label>
-      <input
-        id="newProjectStatus"
-        type="text"
-        placeholder="e.g., Active, Completed, In Progress"
-        value={newProjectStatus}
-        onChange={(e) => setNewProjectStatus(e.target.value)}
-        style={styles.input}
-      />
-    </div>
-    <button
-      onClick={() => addProject()}
-      style={{ ...styles.button, ...styles.primaryButton }}
-    >
-      Add Project
-    </button>
 
-    {/* Projects List */}
-    <h4 style={{ ...styles.contentSectionTitle, marginTop: '2rem' }}>Existing Projects</h4>
+
+
+const ProjectsContent = ({
+  projects, setProjects,
+  newProjectName, setNewProjectName,
+  newProjectStatus, setNewProjectStatus,
+  editingProject, setEditingProject,
+  addProject, updateProject, deleteProject
+}) => (
+  <div style={{ width: '100%', padding: '1.5rem', backgroundColor: '#f9fafb', borderRadius: '0.75rem', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
+    <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1rem', color: '#2d3748' }}>📁 Projects Management</h3>
+
+    {/* Add Project Form */}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
+      <div>
+        <label htmlFor="newProjectName" style={{ fontWeight: 500, color: '#4a5568', display: 'block', marginBottom: '0.25rem' }}>Project Name</label>
+        <input
+          id="newProjectName"
+          type="text"
+          placeholder="Enter project name"
+          value={newProjectName}
+          onChange={(e) => setNewProjectName(e.target.value)}
+          style={{ width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem', outline: 'none' }}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="newProjectStatus" style={{ fontWeight: 500, color: '#4a5568', display: 'block', marginBottom: '0.25rem' }}>Status</label>
+        <input
+          id="newProjectStatus"
+          type="text"
+          placeholder="e.g., Active, Completed, In Progress"
+          value={newProjectStatus}
+          onChange={(e) => setNewProjectStatus(e.target.value)}
+          style={{ width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem', outline: 'none' }}
+        />
+      </div>
+
+      <button
+        onClick={addProject}
+        style={{ backgroundColor: '#4caf50', color: 'white', padding: '0.6rem 1rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600 }}
+      >
+        ➕ Add Project
+      </button>
+    </div>
+
+    {/* Projects Table */}
+    <h4 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#2d3748', marginBottom: '0.75rem' }}>📦 Existing Projects</h4>
+
     {projects.length === 0 ? (
-      <p style={styles.noDataMessage}>No projects added yet.</p>
+      <p style={{ color: '#718096' }}>No projects added yet.</p>
     ) : (
-      <table style={styles.listTable}>
-        <thead>
-          <tr style={styles.tableRow}>
-            <th style={styles.tableHeader}>Name</th>
-            <th style={styles.tableHeader}>Status</th>
-            <th style={styles.tableHeader}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {projects.map((project) => (
-            <tr
-                key={project.id}
-                style={styles.tableRow}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = styles.tableRowHover.backgroundColor}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-            >
-              {editingProject && editingProject.id === project.id ? (
-                <>
-                  <td style={styles.tableCell}>
-                    <input
-                      type="text"
-                      value={editingProject.name}
-                      onChange={(e) => setEditingProject({ ...editingProject, name: e.target.value })}
-                      style={styles.input}
-                    />
-                  </td>
-                  <td style={styles.tableCell}>
-                    <input
-                      type="text"
-                      value={editingProject.status}
-                      onChange={(e) => setEditingProject({ ...editingProject, status: e.target.value })}
-                      style={styles.input}
-                    />
-                  </td>
-                  <td style={styles.tableCell}>
-                    <button
-                      onClick={() => updateProject(project.id)}
-                      style={{ ...styles.button, ...styles.primaryButton }}
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={() => setEditingProject(null)}
-                      style={{ ...styles.button, ...styles.cancelButton }}
-                    >
-                      Cancel
-                    </button>
-                  </td>
-                </>
-              ) : (
-                <>
-                  <td style={styles.tableCell}>{project.name}</td>
-                  <td style={styles.tableCell}>{project.status}</td>
-                  <td style={styles.tableCell}>
-                    <button
-                      onClick={() => setEditingProject(project)}
-                      style={{ ...styles.button, ...styles.editButton }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => deleteProject(project.id)}
-                      style={{ ...styles.button, ...styles.deleteButton }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </>
-              )}
+      <div style={{ overflowX: 'auto' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ backgroundColor: '#edf2f7', textAlign: 'left' }}>
+              <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Name</th>
+              <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Status</th>
+              <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {projects.map((project) => (
+              <tr
+                key={project.id}
+                style={{ transition: 'background-color 0.2s ease-in-out' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              >
+                {editingProject && editingProject.id === project.id ? (
+                  <>
+                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
+                      <input
+                        type="text"
+                        value={editingProject.name}
+                        onChange={(e) => setEditingProject({ ...editingProject, name: e.target.value })}
+                        style={{ width: '100%', padding: '0.4rem', borderRadius: '0.375rem', border: '1px solid #cbd5e0' }}
+                      />
+                    </td>
+                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
+                      <input
+                        type="text"
+                        value={editingProject.status}
+                        onChange={(e) => setEditingProject({ ...editingProject, status: e.target.value })}
+                        style={{ width: '100%', padding: '0.4rem', borderRadius: '0.375rem', border: '1px solid #cbd5e0' }}
+                      />
+                    </td>
+                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
+                      <button
+                        onClick={() => updateProject(project.id)}
+                        style={{ marginRight: '0.5rem', backgroundColor: '#3b82f6', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={() => setEditingProject(null)}
+                        style={{ backgroundColor: '#e53e3e', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                      >
+                        Cancel
+                      </button>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>{project.name}</td>
+                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>{project.status}</td>
+                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
+                      <button
+                        onClick={() => setEditingProject(project)}
+                        style={{ marginRight: '0.5rem', backgroundColor: '#3182ce', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => deleteProject(project.id)}
+                        style={{ backgroundColor: '#e53e3e', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     )}
   </div>
 );
 
-const SkillsContent = ({ skills, setSkills, newSkillName, setNewSkillName, newSkillLevel, setNewSkillLevel, editingSkill, setEditingSkill, addSkill, updateSkill, deleteSkill, styles, setShowModal, setModalContent }) => (
-    <div style={styles.contentSection}>
-        <h3 style={styles.contentSectionTitle}>Skills Showcase</h3>
-        {/* Add Skill Form */}
-        <div style={styles.formGroup}>
-            <label htmlFor="newSkillName" style={styles.label}>Skill Name</label>
-            <input
-                id="newSkillName"
-                type="text"
-                placeholder="e.g., React.js"
-                value={newSkillName}
-                onChange={(e) => setNewSkillName(e.target.value)}
-                style={styles.input}
-            />
-        </div>
-        <div style={styles.formGroup}>
-            <label htmlFor="newSkillLevel" style={styles.label}>Level</label>
-            <input
-                id="newSkillLevel"
-                type="text"
-                placeholder="e.g., Advanced, Intermediate"
-                value={newSkillLevel}
-                onChange={(e) => setNewSkillLevel(e.target.value)}
-                style={styles.input}
-            />
-        </div>
-        <button
-            onClick={() => addSkill()}
-            style={{ ...styles.button, ...styles.primaryButton }}
-        >
-            Add Skill
-        </button>
 
-        {/* Skills List */}
-        <h4 style={{ ...styles.contentSectionTitle, marginTop: '2rem' }}>Existing Skills</h4>
-        {skills.length === 0 ? (
-            <p style={styles.noDataMessage}>No skills added yet.</p>
-        ) : (
-            <table style={styles.listTable}>
-                <thead>
-                    <tr style={styles.tableRow}>
-                        <th style={styles.tableHeader}>Name</th>
-                        <th style={styles.tableHeader}>Level</th>
-                        <th style={styles.tableHeader}>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {skills.map((skill) => (
-                        <tr
-                            key={skill.id}
-                            style={styles.tableRow}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = styles.tableRowHover.backgroundColor}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                        >
-                            {editingSkill && editingSkill.id === skill.id ? (
-                                <>
-                                    <td style={styles.tableCell}>
-                                        <input
-                                            type="text"
-                                            value={editingSkill.name}
-                                            onChange={(e) => setEditingSkill({ ...editingSkill, name: e.target.value })}
-                                            style={styles.input}
-                                        />
-                                    </td>
-                                    <td style={styles.tableCell}>
-                                        <input
-                                            type="text"
-                                            value={editingSkill.level}
-                                            onChange={(e) => setEditingSkill({ ...editingSkill, level: e.target.value })}
-                                            style={styles.input}
-                                        />
-                                    </td>
-                                    <td style={styles.tableCell}>
-                                        <button
-                                            onClick={() => updateSkill(skill.id)}
-                                            style={{ ...styles.button, ...styles.primaryButton }}
-                                        >
-                                            Save
-                                        </button>
-                                        <button
-                                            onClick={() => setEditingSkill(null)}
-                                            style={{ ...styles.button, ...styles.cancelButton }}
-                                        >
-                                            Cancel
-                                        </button>
-                                    </td>
-                                </>
-                            ) : (
-                                <>
-                                    <td style={styles.tableCell}>{skill.name}</td>
-                                    <td style={styles.tableCell}>{skill.level}</td>
-                                    <td style={styles.tableCell}>
-                                        <button
-                                            onClick={() => setEditingSkill(skill)}
-                                            style={{ ...styles.button, ...styles.editButton }}
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            onClick={() => deleteSkill(skill.id)}
-                                            style={{ ...styles.button, ...styles.deleteButton }}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                </>
-                            )}
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        )}
+const SkillsContent = ({
+  skills, setSkills,
+  newSkillName, setNewSkillName,
+  newSkillLevel, setNewSkillLevel,
+  editingSkill, setEditingSkill,
+  addSkill, updateSkill, deleteSkill
+}) => (
+  <div style={{ width: '100%', padding: '1.5rem', backgroundColor: '#f9fafb', borderRadius: '0.75rem', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
+    <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1rem', color: '#2d3748' }}>🧠 Skills Showcase</h3>
+
+    {/* Add Skill Form */}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
+      <div>
+        <label htmlFor="newSkillName" style={{ fontWeight: 500, color: '#4a5568', display: 'block', marginBottom: '0.25rem' }}>Skill Name</label>
+        <input
+          id="newSkillName"
+          type="text"
+          placeholder="e.g., React.js"
+          value={newSkillName}
+          onChange={(e) => setNewSkillName(e.target.value)}
+          style={{ width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem', outline: 'none' }}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="newSkillLevel" style={{ fontWeight: 500, color: '#4a5568', display: 'block', marginBottom: '0.25rem' }}>Level</label>
+        <input
+          id="newSkillLevel"
+          type="text"
+          placeholder="e.g., Advanced, Intermediate"
+          value={newSkillLevel}
+          onChange={(e) => setNewSkillLevel(e.target.value)}
+          style={{ width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem', outline: 'none' }}
+        />
+      </div>
+
+      <button
+        onClick={addSkill}
+        style={{ backgroundColor: '#4caf50', color: 'white', padding: '0.6rem 1rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600 }}
+      >
+        ➕ Add Skill
+      </button>
     </div>
+
+    {/* Skills Table */}
+    <h4 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#2d3748', marginBottom: '0.75rem' }}>💼 Existing Skills</h4>
+
+    {skills.length === 0 ? (
+      <p style={{ color: '#718096' }}>No skills added yet.</p>
+    ) : (
+      <div style={{ overflowX: 'auto' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ backgroundColor: '#edf2f7', textAlign: 'left' }}>
+              <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Name</th>
+              <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Level</th>
+              <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {skills.map((skill) => (
+              <tr
+                key={skill.id}
+                style={{ transition: 'background-color 0.2s ease-in-out' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              >
+                {editingSkill && editingSkill.id === skill.id ? (
+                  <>
+                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
+                      <input
+                        type="text"
+                        value={editingSkill.name}
+                        onChange={(e) => setEditingSkill({ ...editingSkill, name: e.target.value })}
+                        style={{ width: '100%', padding: '0.4rem', borderRadius: '0.375rem', border: '1px solid #cbd5e0' }}
+                      />
+                    </td>
+                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
+                      <input
+                        type="text"
+                        value={editingSkill.level}
+                        onChange={(e) => setEditingSkill({ ...editingSkill, level: e.target.value })}
+                        style={{ width: '100%', padding: '0.4rem', borderRadius: '0.375rem', border: '1px solid #cbd5e0' }}
+                      />
+                    </td>
+                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
+                      <button
+                        onClick={() => updateSkill(skill.id)}
+                        style={{ marginRight: '0.5rem', backgroundColor: '#3b82f6', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={() => setEditingSkill(null)}
+                        style={{ backgroundColor: '#e53e3e', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                      >
+                        Cancel
+                      </button>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>{skill.name}</td>
+                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>{skill.level}</td>
+                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
+                      <button
+                        onClick={() => setEditingSkill(skill)}
+                        style={{ marginRight: '0.5rem', backgroundColor: '#3182ce', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => deleteSkill(skill.id)}
+                        style={{ backgroundColor: '#e53e3e', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </div>
 );
 
-import { FaEdit, FaTrash, FaSave, FaTimes } from "react-icons/fa";
+
+
 
 const EmploymentHistoryContent = ({
-  employmentHistory,
-  setEmploymentHistory,
+  employmentHistory = [],
   newEmploymentTitle,
   setNewEmploymentTitle,
   newEmploymentCompany,
@@ -437,226 +520,118 @@ const EmploymentHistoryContent = ({
   addEmployment,
   updateEmployment,
   deleteEmployment,
-  styles,
-}) => {
-  return (
-    <div
-      style={{
-        ...styles.contentSection,
-        padding: "1.5rem",
-        maxWidth: "1100px",
-        margin: "0 auto",
-        overflowX: "hidden",
-      }}
-    >
+}) => (
+  <div style={{ width: "100%", padding: "1.5rem", background: "#f9fafb", borderRadius: "0.75rem", boxShadow: "0 2px 6px rgba(0,0,0,0.05)", display: "flex", flexDirection: "column", gap: "1.5rem", margin: "0 auto" }}>
 
-      {/* Add Employment Form */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "1rem",
-          marginBottom: "2rem",
-          background: "#f8fafc",
-          padding: "1rem",
-          borderRadius: "10px",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
-        }}
+    {/* Title */}
+    <h3 style={{ fontSize: "1.5rem", fontWeight: 600, color: "#2d3748" }}>🏢 Employment History</h3>
+
+    {/* Add Form */}
+    <div style={{ background: "#fff", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: "0.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <input
+        type="text"
+        placeholder="Job Title"
+        value={newEmploymentTitle}
+        onChange={(e) => setNewEmploymentTitle(e.target.value)}
+        style={{ padding: "0.5rem", border: "1px solid #cbd5e0", borderRadius: "0.375rem" }}
+      />
+      <input
+        type="text"
+        placeholder="Company"
+        value={newEmploymentCompany}
+        onChange={(e) => setNewEmploymentCompany(e.target.value)}
+        style={{ padding: "0.5rem", border: "1px solid #cbd5e0", borderRadius: "0.375rem" }}
+      />
+      <input
+        type="text"
+        placeholder="Duration (e.g., Jan 2022 – Present)"
+        value={newEmploymentDuration}
+        onChange={(e) => setNewEmploymentDuration(e.target.value)}
+        style={{ padding: "0.5rem", border: "1px solid #cbd5e0", borderRadius: "0.375rem" }}
+      />
+
+      <button
+        onClick={addEmployment}
+        style={{ alignSelf: "flex-end", background: "#4caf50", color: "#fff", padding: "0.55rem 1rem", border: "none", borderRadius: "0.375rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem", fontWeight: 600 }}
       >
-        <div style={styles.formGroup}>
-          <label htmlFor="newEmploymentTitle" style={styles.label}>
-            Job Title
-          </label>
-          <input
-            id="newEmploymentTitle"
-            type="text"
-            placeholder="e.g., Software Engineer"
-            value={newEmploymentTitle}
-            onChange={(e) => setNewEmploymentTitle(e.target.value)}
-            style={styles.input}
-          />
-        </div>
-        <div style={styles.formGroup}>
-          <label htmlFor="newEmploymentCompany" style={styles.label}>
-            Company
-          </label>
-          <input
-            id="newEmploymentCompany"
-            type="text"
-            placeholder="e.g., Microsoft"
-            value={newEmploymentCompany}
-            onChange={(e) => setNewEmploymentCompany(e.target.value)}
-            style={styles.input}
-          />
-        </div>
-        <div style={styles.formGroup}>
-          <label htmlFor="newEmploymentDuration" style={styles.label}>
-            Duration
-          </label>
-          <input
-            id="newEmploymentDuration"
-            type="text"
-            placeholder="e.g., Jan 2022 - Present"
-            value={newEmploymentDuration}
-            onChange={(e) => setNewEmploymentDuration(e.target.value)}
-            style={styles.input}
-          />
-        </div>
-        <button
-          onClick={addEmployment}
-          style={{
-            ...styles.button,
-            ...styles.primaryButton,
-            padding: "0.75rem",
-            fontWeight: "bold",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "0.5rem",
-          }}
-        >
-          <FaSave />
-        </button>
-      </div>
-
-      {/* Employment List */}
-      <h4 style={{ ...styles.contentSectionTitle, fontSize: "1.5rem", marginBottom: "1rem" }}>
-        Existing Entries
-      </h4>
-
-      {employmentHistory.length === 0 ? (
-        <p style={{ color: "#888", fontStyle: "italic" }}>
-          No employment history added yet.
-        </p>
-      ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          {employmentHistory.map((entry) => (
-            <div
-              key={entry.id}
-              style={{
-                border: "1px solid #e2e8f0",
-                borderRadius: "10px",
-                padding: "1rem",
-                backgroundColor: "#fff",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-                transition: "0.3s ease",
-              }}
-            >
-              {editingEmployment?.id === entry.id ? (
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                  <input
-                    type="text"
-                    value={editingEmployment.title}
-                    onChange={(e) =>
-                      setEditingEmployment({ ...editingEmployment, title: e.target.value })
-                    }
-                    style={styles.input}
-                  />
-                  <input
-                    type="text"
-                    value={editingEmployment.company}
-                    onChange={(e) =>
-                      setEditingEmployment({ ...editingEmployment, company: e.target.value })
-                    }
-                    style={styles.input}
-                  />
-                  <input
-                    type="text"
-                    value={editingEmployment.duration}
-                    onChange={(e) =>
-                      setEditingEmployment({ ...editingEmployment, duration: e.target.value })
-                    }
-                    style={styles.input}
-                  />
-                  <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
-                    <button
-                      onClick={() => updateEmployment(entry.id)}
-                      style={{
-                        // ...styles.button,
-                        ...styles.primaryButton,
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "0.5rem",
-                      }}
-                    >
-                      <FaSave />
-                    </button>
-                    <button
-                      onClick={() => setEditingEmployment(null)}
-                      style={{
-                        // ...styles.button,
-                        ...styles.cancelButton,
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "0.5rem",
-                      }}
-                    >
-                      <FaTimes />
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "0.5rem",
-                  }}
-                >
-                  <div>
-                    <p style={{ margin: 0 }}>
-                      <strong>Title:</strong> {entry.title}
-                    </p>
-                    <p style={{ margin: 0 }}>
-                      <strong>Company:</strong> {entry.company}
-                    </p>
-                    <p style={{ margin: 0 }}>
-                      <strong>Duration:</strong> {entry.duration}
-                    </p>
-                  </div>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      gap: "0.5rem",
-                      marginTop: "0.5rem",
-                    }}
-                  >
-                    <button
-                      title="Edit"
-                      onClick={() => setEditingEmployment(entry)}
-                      style={{
-                        ...styles.iconButton,
-                        ...styles.editButton,
-                      }}
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      title="Delete"
-                      onClick={() => deleteEmployment(entry.id)}
-                      style={{
-                        ...styles.iconButton,
-                        ...styles.deleteButton,
-                      }}
-                    >
-                      <FaTrash />
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+        <FaSave /> Add
+      </button>
     </div>
-  );
-};
+
+    {/* List */}
+    {employmentHistory.length === 0 ? (
+      <p style={{ color: "#718096" }}>No employment history added yet.</p>
+    ) : (
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {employmentHistory.map((entry) => (
+          <div key={entry.id} style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "0.5rem", padding: "1rem", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
+
+            {/* EDIT MODE */}
+            {editingEmployment?.id === entry.id ? (
+              <>
+                <input
+                  type="text"
+                  value={editingEmployment.title}
+                  onChange={(e) => setEditingEmployment({ ...editingEmployment, title: e.target.value })}
+                  style={{ width: "100%", marginBottom: "0.6rem", padding: "0.5rem", border: "1px solid #cbd5e0", borderRadius: "0.375rem" }}
+                />
+                <input
+                  type="text"
+                  value={editingEmployment.company}
+                  onChange={(e) => setEditingEmployment({ ...editingEmployment, company: e.target.value })}
+                  style={{ width: "100%", marginBottom: "0.6rem", padding: "0.5rem", border: "1px solid #cbd5e0", borderRadius: "0.375rem" }}
+                />
+                <input
+                  type="text"
+                  value={editingEmployment.duration}
+                  onChange={(e) => setEditingEmployment({ ...editingEmployment, duration: e.target.value })}
+                  style={{ width: "100%", marginBottom: "0.8rem", padding: "0.5rem", border: "1px solid #cbd5e0", borderRadius: "0.375rem" }}
+                />
+
+                <div style={{ display: "flex", gap: "0.5rem" }}>
+                  <button
+                    onClick={() => updateEmployment(entry.id)}
+                    style={{ flex: 1, background: "#3b82f6", color: "#fff", padding: "0.5rem", border: "none", borderRadius: "0.375rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem" }}
+                  >
+                    <FaSave /> Save
+                  </button>
+                  <button
+                    onClick={() => setEditingEmployment(null)}
+                    style={{ flex: 1, background: "#e53e3e", color: "#fff", padding: "0.5rem", border: "none", borderRadius: "0.375rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem" }}
+                  >
+                    <FaTimes /> Cancel
+                  </button>
+                </div>
+              </>
+            ) : (
+              /* VIEW MODE */
+              <>
+                <p style={{ margin: "0 0 0.25rem 0" }}><strong>Title:</strong> {entry.title}</p>
+                <p style={{ margin: "0 0 0.25rem 0" }}><strong>Company:</strong> {entry.company}</p>
+                <p style={{ margin: "0 0 0.5rem 0", color: "#4a5568" }}><strong>Duration:</strong> {entry.duration}</p>
+
+                <div style={{ display: "flex", gap: "0.5rem", justifyContent: "flex-end" }}>
+                  <button
+                    onClick={() => setEditingEmployment(entry)}
+                    style={{ background: "#3182ce", color: "#fff", padding: "0.4rem 0.75rem", border: "none", borderRadius: "0.375rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem" }}
+                  >
+                    <FaEdit /> Edit
+                  </button>
+                  <button
+                    onClick={() => deleteEmployment(entry.id)}
+                    style={{ background: "#e53e3e", color: "#fff", padding: "0.4rem 0.75rem", border: "none", borderRadius: "0.375rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem" }}
+                  >
+                    <FaTrash /> Delete
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+);
 
 
 const TestimonialsContent = ({
@@ -673,298 +648,412 @@ const TestimonialsContent = ({
   addTestimonial,
   updateTestimonial,
   deleteTestimonial,
-  styles,
-  setShowModal,
-  setModalContent,
 }) => {
-  const responsiveTable = {
-    overflowX: 'auto',
-    display: 'block',
-    maxWidth: '100%',
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const containerStyle = {
+    maxWidth: "960px",
+    margin: "2rem auto",
+    padding: "2rem",
+    background: "#f9fafb",
+    borderRadius: "0.75rem",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
+    boxSizing: "border-box",
+  };
+
+  const inputStyle = {
+    width: "100%",
+    padding: "0.6rem",
+    marginBottom: "1rem",
+    border: "1px solid #cbd5e0",
+    borderRadius: "0.375rem",
+    fontSize: "1rem",
+    boxSizing: "border-box",
+  };
+
+  const textareaStyle = {
+    ...inputStyle,
+    minHeight: "80px",
+    resize: "vertical",
+  };
+
+  const checkboxStyle = {
+    marginRight: "0.5rem",
+    transform: "scale(1.2)",
+  };
+
+  const buttonStyle = (bgColor) => ({
+    backgroundColor: bgColor,
+    color: "#fff",
+    padding: "0.5rem 1rem",
+    border: "none",
+    borderRadius: "0.375rem",
+    fontWeight: 600,
+    fontSize: "0.95rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "0.4rem",
+    width: isMobile ? "100%" : "auto",
+    marginTop: isMobile ? "0.4rem" : "0",
+  });
+
+  const rowBoxStyle = {
+    borderBottom: "1px solid #e2e8f0",
+    padding: "1rem 0",
+    display: "flex",
+    flexDirection: isMobile ? "column" : "row",
+    justifyContent: "space-between",
+    alignItems: isMobile ? "flex-start" : "center",
+    gap: "1rem",
+    fontSize: "0.95rem",
+    color: "#4a5568",
   };
 
   return (
-    <div style={styles.contentSection}>
-      <h3 style={styles.contentSectionTitle}>Testimonials Management</h3>
+    <div style={containerStyle}>
+      <h3 style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1.5rem" }}>
+        📝 Testimonials Management
+      </h3>
 
-      {/* Add Testimonial Form */}
-      <div style={styles.formGroup}>
-        <label htmlFor="newTestimonialText" style={styles.label}>Testimonial Text</label>
+      {/* Add Form */}
+      <div>
         <textarea
-          id="newTestimonialText"
           placeholder="Enter testimonial text"
           value={newTestimonialText}
           onChange={(e) => setNewTestimonialText(e.target.value)}
-          style={styles.textarea}
-        ></textarea>
-      </div>
-      <div style={styles.formGroup}>
-        <label htmlFor="newTestimonialAuthor" style={styles.label}>Author</label>
+          style={textareaStyle}
+        />
         <input
-          id="newTestimonialAuthor"
           type="text"
-          placeholder="e.g., John Doe"
+          placeholder="Author"
           value={newTestimonialAuthor}
           onChange={(e) => setNewTestimonialAuthor(e.target.value)}
-          style={styles.input}
+          style={inputStyle}
         />
-      </div>
-      <div style={styles.checkboxContainer}>
-        <input
-          id="newTestimonialApproved"
-          type="checkbox"
-          checked={newTestimonialApproved}
-          onChange={(e) => setNewTestimonialApproved(e.target.checked)}
-          style={styles.checkbox}
-        />
-        <label htmlFor="newTestimonialApproved" style={{ ...styles.label, marginBottom: '0' }}>
+        <label style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
+          <input
+            type="checkbox"
+            checked={newTestimonialApproved}
+            onChange={(e) => setNewTestimonialApproved(e.target.checked)}
+            style={checkboxStyle}
+          />
           Approved
         </label>
+        <button
+          onClick={addTestimonial}
+          style={buttonStyle("#4caf50")}
+        >
+          Add Testimonial
+        </button>
       </div>
-      <button
-        onClick={() => addTestimonial()}
-        style={{ ...styles.button, ...styles.primaryButton }}
-      >
-        Add Testimonial
-      </button>
 
-      {/* Testimonials List */}
-      <h4 style={{ ...styles.contentSectionTitle, marginTop: '2rem' }}>Existing Testimonials</h4>
+      <h4 style={{ marginTop: "2.5rem", fontSize: "1.25rem", fontWeight: "600" }}>
+        📜 Existing Testimonials
+      </h4>
+
       {testimonials.length === 0 ? (
-        <p style={styles.noDataMessage}>No testimonials added yet.</p>
+        <p style={{ color: "#718096", marginTop: "1rem" }}>No testimonials added yet.</p>
       ) : (
-        <div style={responsiveTable}>
-          <table style={{ ...styles.listTable, minWidth: '600px' }}>
-            <thead>
-              <tr style={styles.tableRow}>
-                <th style={styles.tableHeader}>Text</th>
-                <th style={styles.tableHeader}>Author</th>
-                <th style={styles.tableHeader}>Approved</th>
-                <th style={styles.tableHeader}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {testimonials.map((testimonial) => {
-                const isEditing = editingTestimonial && editingTestimonial.id === testimonial.id;
-
-                return (
-                  <tr
-                    key={testimonial.id}
-                    style={styles.tableRow}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.backgroundColor = styles.tableRowHover.backgroundColor)
-                    }
-                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
-                  >
-                    {isEditing ? (
-                      <>
-                        <td style={styles.tableCell}>
-                          <textarea
-                            value={editingTestimonial.text}
-                            onChange={(e) =>
-                              setEditingTestimonial({ ...editingTestimonial, text: e.target.value })
-                            }
-                            style={styles.textarea}
-                          />
-                        </td>
-                        <td style={styles.tableCell}>
-                          <input
-                            type="text"
-                            value={editingTestimonial.author}
-                            onChange={(e) =>
-                              setEditingTestimonial({ ...editingTestimonial, author: e.target.value })
-                            }
-                            style={styles.input}
-                          />
-                        </td>
-                        <td style={styles.tableCell}>
-                          <input
-                            type="checkbox"
-                            checked={editingTestimonial.approved}
-                            onChange={(e) =>
-                              setEditingTestimonial({
-                                ...editingTestimonial,
-                                approved: e.target.checked,
-                              })
-                            }
-                            style={styles.checkbox}
-                          />
-                        </td>
-                        <td style={styles.tableCell}>
-                          <button
-                            onClick={() => updateTestimonial(testimonial.id)}
-                            style={{ ...styles.button, ...styles.primaryButton }}
-                            title="Save"
-                          >
-                            <FaSave />
-                          </button>
-                          <button
-                            onClick={() => setEditingTestimonial(null)}
-                            style={{ ...styles.button, ...styles.cancelButton }}
-                            title="Cancel"
-                          >
-                            <FaTimes />
-                          </button>
-                        </td>
-                      </>
-                    ) : (
-                      <>
-                        <td style={styles.tableCell}>{testimonial.text}</td>
-                        <td style={styles.tableCell}>{testimonial.author}</td>
-                        <td style={styles.tableCell}>{testimonial.approved ? "Yes" : "No"}</td>
-                        <td style={styles.tableCell}>
-                          <button
-                            onClick={() => setEditingTestimonial(testimonial)}
-                            style={{ ...styles.button, ...styles.editButton }}
-                            title="Edit"
-                          >
-                            <FaEdit />
-                          </button>
-                          <button
-                            onClick={() => deleteTestimonial(testimonial.id)}
-                            style={{ ...styles.button, ...styles.deleteButton }}
-                            title="Delete"
-                          >
-                            <FaTrash />
-                          </button>
-                        </td>
-                      </>
-                    )}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        testimonials.map((t) => {
+          const isEditing = editingTestimonial && editingTestimonial.id === t.id;
+          return (
+            <div key={t.id} style={rowBoxStyle}>
+              {isEditing ? (
+                <div style={{ width: "100%" }}>
+                  <textarea
+                    value={editingTestimonial.text}
+                    onChange={(e) => setEditingTestimonial({ ...editingTestimonial, text: e.target.value })}
+                    style={textareaStyle}
+                  />
+                  <input
+                    type="text"
+                    value={editingTestimonial.author}
+                    onChange={(e) => setEditingTestimonial({ ...editingTestimonial, author: e.target.value })}
+                    style={inputStyle}
+                  />
+                  <label style={{ display: "flex", alignItems: "center", marginBottom: "0.75rem" }}>
+                    <input
+                      type="checkbox"
+                      checked={editingTestimonial.approved}
+                      onChange={(e) => setEditingTestimonial({ ...editingTestimonial, approved: e.target.checked })}
+                      style={checkboxStyle}
+                    />
+                    Approved
+                  </label>
+                  <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "0.5rem" }}>
+                    <button
+                      onClick={() => updateTestimonial(t.id)}
+                      style={buttonStyle("#3182ce")}
+                    >
+                      <FaEdit /> Save
+                    </button>
+                    <button
+                      onClick={() => setEditingTestimonial(null)}
+                      style={buttonStyle("#e53e3e")}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div style={{ width: "100%" }}>
+                  <div style={{ fontWeight: 600 }}>{t.text}</div>
+                  <div>Author: {t.author}</div>
+                  <div>Approved: {t.approved ? "Yes" : "No"}</div>
+                  <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "0.5rem", marginTop: "0.5rem" }}>
+                    <button
+                      onClick={() => setEditingTestimonial(t)}
+                      style={buttonStyle("#3182ce")}
+                    >
+                      <FaEdit /> Edit
+                    </button>
+                    <button
+                      onClick={() => deleteTestimonial(t.id)}
+                      style={buttonStyle("#e53e3e")}
+                    >
+                      <FaTrash /> Delete
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })
       )}
     </div>
   );
 };
 
 
-const BlogsContent = ({ blogs, setBlogs, newBlogTitle, setNewBlogTitle, newBlogContent, setNewBlogContent, newBlogPublished, setNewBlogPublished, editingBlog, setEditingBlog, addBlog, updateBlog, deleteBlog, styles, setShowModal, setModalContent }) => (
-    <div style={styles.contentSection}>
-        <h3 style={styles.contentSectionTitle}>Blogs Section</h3>
-        {/* Add Blog Form */}
-        <div style={styles.formGroup}>
-            <label htmlFor="newBlogTitle" style={styles.label}>Blog Title</label>
-            <input
-                id="newBlogTitle"
-                type="text"
-                placeholder="Enter blog title"
-                value={newBlogTitle}
-                onChange={(e) => setNewBlogTitle(e.target.value)}
-                style={styles.input}
-            />
-        </div>
-        <div style={styles.formGroup}>
-            <label htmlFor="newBlogContent" style={styles.label}>Content</label>
-            <textarea
-                id="newBlogContent"
-                placeholder="Write your blog content here..."
-                value={newBlogContent}
-                onChange={(e) => setNewBlogContent(e.target.value)}
-                style={styles.textarea}
-            ></textarea>
-        </div>
-        <div style={styles.checkboxContainer}>
-            <input
-                id="newBlogPublished"
-                type="checkbox"
-                checked={newBlogPublished}
-                onChange={(e) => setNewBlogPublished(e.target.checked)}
-                style={styles.checkbox}
-            />
-            <label htmlFor="newBlogPublished" style={{ ...styles.label, marginBottom: '0' }}>Published</label>
-        </div>
-        <button
-            onClick={() => addBlog()}
-            style={{ ...styles.button, ...styles.primaryButton }}
-        >
-            Add Blog Post
-        </button>
 
-        {/* Blogs List */}
-        <h4 style={{ ...styles.contentSectionTitle, marginTop: '2rem' }}>Existing Blog Posts</h4>
+const BlogsContent = ({
+  blogs,
+  setBlogs,
+  newBlogTitle,
+  setNewBlogTitle,
+  newBlogContent,
+  setNewBlogContent,
+  newBlogPublished,
+  setNewBlogPublished,
+  editingBlog,
+  setEditingBlog,
+  addBlog,
+  updateBlog,
+  deleteBlog,
+}) => {
+  return (
+    <div style={{
+      width: '100%',
+      padding: '1.5rem',
+      backgroundColor: '#f9fafb',
+      borderRadius: '0.75rem',
+      boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '1.5rem',
+      boxSizing: 'border-box',
+    }}>
+      <h3 style={{ fontSize: '1.75rem', fontWeight: 600, color: '#2d3748' }}>📝 Manage Blog Posts</h3>
+
+      {/* Add Blog Form */}
+      <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
+        <h4 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#2d3748', marginBottom: '1rem' }}>➕ Add New Blog</h4>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div>
+            <label htmlFor="newBlogTitle" style={{ fontWeight: 600, color: '#4a5568' }}>Title</label>
+            <input
+              id="newBlogTitle"
+              type="text"
+              placeholder="Enter blog title"
+              value={newBlogTitle}
+              onChange={(e) => setNewBlogTitle(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '0.5rem',
+                marginTop: '0.25rem',
+                borderRadius: '0.375rem',
+                border: '1px solid #cbd5e0',
+                fontSize: '1rem',
+                boxSizing: 'border-box',
+              }}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="newBlogContent" style={{ fontWeight: 600, color: '#4a5568' }}>Content</label>
+            <textarea
+              id="newBlogContent"
+              placeholder="Write your blog content here..."
+              value={newBlogContent}
+              onChange={(e) => setNewBlogContent(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '0.5rem',
+                marginTop: '0.25rem',
+                borderRadius: '0.375rem',
+                border: '1px solid #cbd5e0',
+                fontSize: '1rem',
+                resize: 'vertical',
+                minHeight: '120px',
+                boxSizing: 'border-box',
+              }}
+            />
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input
+              id="newBlogPublished"
+              type="checkbox"
+              checked={newBlogPublished}
+              onChange={(e) => setNewBlogPublished(e.target.checked)}
+              style={{ width: '16px', height: '16px' }}
+            />
+            <label htmlFor="newBlogPublished" style={{ fontWeight: 500, color: '#4a5568' }}>Mark as Published</label>
+          </div>
+
+          <button
+            onClick={addBlog}
+            style={{
+              alignSelf: 'flex-start',
+              padding: '0.6rem 1rem',
+              backgroundColor: '#3182ce',
+              color: 'white',
+              border: 'none',
+              borderRadius: '0.375rem',
+              fontWeight: '600',
+              cursor: 'pointer',
+              fontSize: '1rem',
+            }}
+          >
+            Add Blog
+          </button>
+        </div>
+      </div>
+
+      {/* Blogs List */}
+      <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
+        <h4 style={{ fontSize: '1.25rem', marginBottom: '1rem', fontWeight: 600, color: '#2d3748' }}>
+          📚 Blog Posts ({blogs.length})
+        </h4>
+
         {blogs.length === 0 ? (
-            <p style={styles.noDataMessage}>No blog posts added yet.</p>
+          <p style={{ color: '#718096', fontStyle: 'italic' }}>No blog posts added yet.</p>
         ) : (
-            <table style={styles.listTable}>
-                <thead>
-                    <tr style={styles.tableRow}>
-                        <th style={styles.tableHeader}>Title</th>
-                        <th style={styles.tableHeader}>Published</th>
-                        <th style={styles.tableHeader}>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {blogs.map((blog) => (
-                        <tr
-                            key={blog.id}
-                            style={styles.tableRow}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = styles.tableRowHover.backgroundColor}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                        >
-                            {editingBlog && editingBlog.id === blog.id ? (
-                                <>
-                                    <td style={styles.tableCell}>
-                                        <input
-                                            type="text"
-                                            value={editingBlog.title}
-                                            onChange={(e) => setNewBlogTitle(e.target.value)}
-                                            style={styles.input}
-                                        />
-                                    </td>
-                                    <td style={styles.tableCell}>
-                                        <input
-                                            type="checkbox"
-                                            checked={editingBlog.published}
-                                            onChange={(e) => setNewBlogPublished(e.target.checked)}
-                                            style={styles.checkbox}
-                                        />
-                                    </td>
-                                    <td style={styles.tableCell}>
-                                        <button
-                                            onClick={() => updateBlog(blog.id)}
-                                            style={{ ...styles.button, ...styles.primaryButton }}
-                                        >
-                                            Save
-                                        </button>
-                                        <button
-                                            onClick={() => setEditingBlog(null)}
-                                            style={{ ...styles.button, ...styles.cancelButton }}
-                                        >
-                                            Cancel
-                                        </button>
-                                    </td>
-                                </>
-                            ) : (
-                                <>
-                                    <td style={styles.tableCell}>{blog.title}</td>
-                                    <td style={styles.tableCell}>{blog.published ? 'Yes' : 'No'}</td>
-                                    <td style={styles.tableCell}>
-                                        <button
-                                            onClick={() => setEditingBlog(blog)}
-                                            style={{ ...styles.button, ...styles.editButton }}
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            onClick={() => deleteBlog(blog.id)}
-                                            style={{ ...styles.button, ...styles.deleteButton }}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                </>
-                            )}
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem',
+          }}>
+            {blogs.map((b, i) => (
+              <div
+                key={i}
+                style={{
+                  backgroundColor: '#f7fafc',
+                  padding: '0.75rem 1rem',
+                  borderRadius: '0.5rem',
+                  border: '1px solid #e2e8f0',
+                  width: '100%',
+                  boxSizing: 'border-box',
+                }}
+              >
+                {editingBlog && editingBlog.id === b.id ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <input
+                      type="text"
+                      value={editingBlog.title}
+                      onChange={(e) => setNewBlogTitle(e.target.value)}
+                      style={{
+                        padding: '0.4rem',
+                        borderRadius: '0.375rem',
+                        border: '1px solid #cbd5e0',
+                        width: '100%',
+                        boxSizing: 'border-box',
+                      }}
+                    />
+                    <textarea
+                      value={editingBlog.content}
+                      onChange={(e) => setNewBlogContent(e.target.value)}
+                      style={{
+                        padding: '0.4rem',
+                        borderRadius: '0.375rem',
+                        border: '1px solid #cbd5e0',
+                        resize: 'vertical',
+                        width: '100%',
+                        boxSizing: 'border-box',
+                      }}
+                    />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <input
+                        type="checkbox"
+                        checked={editingBlog.published}
+                        onChange={(e) => setNewBlogPublished(e.target.checked)}
+                      />
+                      <label>Published</label>
+                    </div>
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: window.innerWidth <= 600 ? 'column' : 'row',
+                      gap: '0.5rem',
+                      width: '100%',
+                    }}>
+                      <button
+                        onClick={() => updateBlog(b.id)}
+                        style={{ backgroundColor: '#38a169', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', width: '100%' }}
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={() => setEditingBlog(null)}
+                        style={{ backgroundColor: '#e53e3e', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', width: '100%' }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                    <div style={{ fontWeight: 600 }}>{b.title}</div>
+                    <div style={{ fontSize: '0.95rem', color: '#4a5568' }}>
+                      {b.published ? '📢 Published' : '📝 Draft'} {b.createdAt ? `| ${b.createdAt}` : ''}
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: window.innerWidth <= 600 ? 'column' : 'row', gap: '0.5rem', marginTop: '0.5rem' }}>
+                      <button
+                        onClick={() => setEditingBlog(b)}
+                        style={{ backgroundColor: '#ecc94b', color: '#1a202c', padding: '0.3rem 0.75rem', border: 'none', borderRadius: '0.375rem', width: window.innerWidth <= 600 ? '100%' : 'auto' }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => deleteBlog(b.id)}
+                        style={{ backgroundColor: '#e53e3e', color: 'white', padding: '0.3rem 0.75rem', border: 'none', borderRadius: '0.375rem', width: window.innerWidth <= 600 ? '100%' : 'auto' }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         )}
+      </div>
     </div>
-);
+  );
+};
+
+
+
 
 export {
   DashboardContent,

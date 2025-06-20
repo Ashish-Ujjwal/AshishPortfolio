@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Layout from '@/layout/Layout';
-import TopBar from '@/components/TopBar';
+import { context } from '@/context/context';
 import { DashboardContent, ProjectsContent, SkillsContent, EmploymentHistoryContent, TestimonialsContent, BlogsContent } from '@/components/Admin/component';
 
 // A minimal Layout component to make the example self-contained within this immersive.
@@ -14,39 +14,6 @@ import { DashboardContent, ProjectsContent, SkillsContent, EmploymentHistoryCont
 //     </div>
 //   );
 // };
-
-const Banner = ({ children }) => {
-  return (
-    <section className="w-full bg-gradient-to-r from-[#1f2937] to-[#111827] text-white py-12 px-6 md:px-16">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
-        {/* Text Section */}
-        <div className="flex-1">
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
-            Welcome to Your Admin Dashboard
-          </h1>
-          <p className="text-lg md:text-xl text-gray-300 mb-6">
-            Manage your content, projects, and skills easily in one centralized place.
-          </p>
-          <button className="bg-blue-600 hover:bg-blue-700 transition px-6 py-3 rounded-xl text-white font-medium shadow-lg">
-            Get Started
-          </button>
-        </div>
-
-        {/* Image or Illustration */}
-        <div className="flex-1">
-          <img
-            src="https://illustrations.popsy.co/gray/dashboard.svg"
-            alt="Admin dashboard illustration"
-            className="w-full h-auto"
-          />
-        </div>
-      </div>
-      <div>
-        {children}
-      </div>
-    </section>
-  );
-};
 
 // Custom Modal Component for confirmations/messages (replaces alert/confirm)
 const Modal = ({ show, title, message, onConfirm, onCancel, type = 'info' }) => {
@@ -574,7 +541,7 @@ const MiniTopBar = ({ activeSection, setActiveSection, styles }) => {
             case 'dashboard': return '📊';
             case 'projects': return '🚀';
             case 'skills': return '💡';
-            case 'employment-history': return '💼';
+            case 'employment': return '💼';
             case 'testimonials': return '💬';
             case 'blogs': return '✍️';
             default: return '📁';
@@ -587,7 +554,7 @@ const MiniTopBar = ({ activeSection, setActiveSection, styles }) => {
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
 
-    const navItems = ['dashboard', 'projects', 'skills', 'employment-history', 'testimonials', 'blogs'];
+    const navItems = ['dashboard', 'projects', 'skills', 'employment', 'testimonials', 'blogs'];
 
     return (
         <nav style={styles.topbar}>
@@ -709,6 +676,11 @@ const MiniTopBar = ({ activeSection, setActiveSection, styles }) => {
 export default function AdminPanelPage() {
     // State for active section in the sidebar
     const [activeSection, setActiveSection] = useState('dashboard');
+    const { page_info_function } = useContext(context);
+    
+      useEffect(() => {
+        page_info_function("EDIT Y'R PROFILE", "Welcome Ashish!", "Admin");
+      }, []);
 
     // States for CRUD data: projects (initial dummy data)
     const [projects, setProjects] = useState([
@@ -1152,7 +1124,7 @@ export default function AdminPanelPage() {
                         />
                     )}
 
-                    {activeSection === 'employment-history' && (
+                    {activeSection === 'employment' && (
                         <EmploymentHistoryContent
                             employmentHistory={employmentHistory}
                             setEmploymentHistory={setEmploymentHistory}
