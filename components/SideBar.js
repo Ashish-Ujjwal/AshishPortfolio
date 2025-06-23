@@ -56,7 +56,7 @@ const SideBar = () => {
 							/>
 						</a>
 						
-						<a href="https://x.com/ASHISHUJJW6676" target="_blank" rel="noopener noreferrer" style={{ marginRight: '10px' }}>
+						{/* <a href="https://x.com/ASHISHUJJW6676" target="_blank" rel="noopener noreferrer" style={{ marginRight: '10px' }}>
 							<img
 								src="https://img.icons8.com/?size=100&id=bG29Ckcdp6YP&format=png&color=000000"
 								alt="Twitter"
@@ -64,6 +64,10 @@ const SideBar = () => {
 								height="20"
 								style={{ verticalAlign: 'middle' }}
 							/>
+						</a> */}
+
+						<a href="https://x.com/ASHISHUJJW6676" target="_blank">
+							<i className="fab fa-twitter" />
 						</a>
 
 						
