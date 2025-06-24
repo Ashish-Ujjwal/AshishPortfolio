@@ -88,7 +88,7 @@ const Index = () => {
 			{/* contact end */}
 			<div className="map">
 				<iframe
-					src="https://www.google.com/maps/embed/v1/place?q=Fort+Walton+Beach,+FL,+USA&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
+					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3443.850047957325!2d85.00789407514853!3d24.757110277996922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f32b257659d827%3A0xe640203c936eab0f!2sKendui%20Surya%20Mandir!5e1!3m2!1sen!2sin!4v1750742336960!5m2!1sen!2sin"
 					style={{ border: 0, width: "100%", height: "100%" }}
 					allowFullScreen=""
 					loading="lazy"

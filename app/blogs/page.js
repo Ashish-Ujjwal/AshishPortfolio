@@ -11,7 +11,7 @@ const blogPosts = [
         category: "Career",
         date: "17 DEC",
         time: "14:32",
-        author: "Ashish Ujjwal",
+        author: "Ashish U.",
         image: "/img/blog/b1.png",
     },
     {
@@ -20,7 +20,7 @@ const blogPosts = [
         category: "Code",
         date: "13 SEPT",
         time: "14:32",
-        author: "Ashish Ujjwal",
+        author: "Ashish U.",
         image: "/img/blog/b2.jpg",
     },
     {
@@ -29,7 +29,7 @@ const blogPosts = [
         category: "Frameworks",
         date: "17 AUG",
         time: "09:32",
-        author: "Ashish Ujjwal",
+        author: "Ashish U.",
         image: "/img/blog/b3.png",
     },
     {
@@ -38,7 +38,7 @@ const blogPosts = [
         category: "Guide",
         date: "17 JULY",
         time: "14:32",
-        author: "Ashish Ujjwal",
+        author: "Ashish U.",
         image: "/img/blog/b4.jpg",
     },
     {
@@ -47,7 +47,7 @@ const blogPosts = [
         category: "Blog",
         date: "17 FEB",
         time: "14:32",
-        author: "Ashish Ujjwal",
+        author: "Ashish U.",
         image: "/img/blog/b5.jpg",
     },
     {
@@ -56,7 +56,7 @@ const blogPosts = [
         category: "Tools",
         date: "17 JULY",
         time: "14:32",
-        author: "Ashish Ujjwal",
+        author: "Ashish U.",
         image: "/img/blog/b6.jpg",
     },
     {
@@ -65,7 +65,7 @@ const blogPosts = [
         category: "Tech",
         date: "22 DEC",
         time: "10:00",
-        author: "Ashish Ujjwal",
+        author: "Ashish U.",
         image: "/img/blog/b1.png",
     },
     {
@@ -74,7 +74,7 @@ const blogPosts = [
         category: "Code",
         date: "15 OCT",
         time: "16:45",
-        author: "Ashish Ujjwal",
+        author: "Ashish U.",
         image: "/img/blog/b2.jpg",
     },
     {
@@ -83,7 +83,7 @@ const blogPosts = [
         category: "Frameworks",
         date: "01 SEP",
         time: "12:12",
-        author: "Ashish Ujjwal",
+        author: "Ashish U.",
         image: "/img/blog/b3.png",
     },
 ];
@@ -113,34 +113,34 @@ const categoriesJson = [
 
 
 // Create a separate component for rendering blog posts
-const BlogPosts = ({ posts }) => {
-    return (
-        <div
-            className="trm-older-publications-card trm-scroll-animation"
-            data-scroll
-            data-scroll-offset={40}
-        >
-            {posts.map((post) => (
-                <div className="trm-older-publication trm-mb-20" key={post.id}>
-                    <Link legacyBehavior href={`/publication/${post.id}`}>
-                        <a className="trm-op-top trm-anima-link">
-                            <span className="trm-op-cover">
-                                <img src={post.image} alt="cover" />
-                            </span>
-                            <h6 className="trm-op-title">{post.title}</h6>
-                        </a>
-                    </Link>
-                    <div className="trm-divider trm-mb-15 trm-mt-20" />
-                    <ul className="trm-card-data trm-label">
-                        <li>{post.date}</li>
-                        <li>{post.time}</li>
-                        <li>{post.author}</li>
-                    </ul>
-                </div>
-            ))}
-        </div>
-    );
-};
+// const BlogPosts = ({ posts }) => {
+//     return (
+//         <div
+//             className="trm-older-publications-card trm-scroll-animation"
+//             data-scroll
+//             data-scroll-offset={40}
+//         >
+//             {posts.map((post) => (
+//                 <div className="trm-older-publication trm-mb-20" key={post.id}>
+//                     <Link legacyBehavior href={`/publication/${post.id}`}>
+//                         <a className="trm-op-top trm-anima-link">
+//                             <span className="trm-op-cover">
+//                                 <img src={post.image} alt="cover" />
+//                             </span>
+//                             <h6 className="trm-op-title">{post.title}</h6>
+//                         </a>
+//                     </Link>
+//                     <div className="trm-divider trm-mb-15 trm-mt-20" />
+//                     <ul className="trm-card-data trm-label">
+//                         <li>{post.date}</li>
+//                         <li>{post.time}</li>
+//                         <li>{post.author}</li>
+//                     </ul>
+//                 </div>
+//             ))}
+//         </div>
+//     );
+// };
 
 
 const Index = () => {
@@ -265,7 +265,7 @@ const Index = () => {
             {/* newest publications end */}
 
             {/* Pagination */}
-            <div className="trm-divider trm-mb-40" />
+            {/* <div className="trm-divider trm-mb-40" />
             <ul className="trm-pagination">
                 {Array.from({ length: Math.ceil(blogPosts.length / postsPerPage) }, (_, index) => (
                     <li key={index + 1}>
@@ -281,7 +281,7 @@ const Index = () => {
                         </a>
                     </li>
                 ))}
-            </ul>
+            </ul> */}
             {/* Pagination End */}
 
             {/* Older Publications */}
