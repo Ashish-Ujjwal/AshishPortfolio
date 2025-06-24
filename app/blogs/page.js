@@ -229,7 +229,7 @@ const Index = () => {
                         Newest Publications <span data-number={1} />
                     </h5>
                 </div>
-                {currentPosts.map((post) => (
+                {blogPosts.map((post) => (
                     <div className="col-lg-6" key={post.id}>
                         {/* blog card */}
                         <div
