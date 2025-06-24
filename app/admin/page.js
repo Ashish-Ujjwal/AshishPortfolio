@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Layout from '@/layout/Layout';
 import { context } from '@/context/context';
+// import { DashboardContent } from '@/components/Admin/Dashboard';
 import { DashboardContent, ProjectsContent, SkillsContent, EmploymentHistoryContent, TestimonialsContent, BlogsContent } from '@/components/Admin/component';
 
 // A minimal Layout component to make the example self-contained within this immersive.
@@ -26,14 +27,12 @@ const Modal = ({ show, title, message, onConfirm, onCancel, type = 'info' }) => 
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.75)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 1000,
         },
         modalContent: {
-            backgroundColor: '#303746', // Dark background matching panel
             padding: '2rem',
             borderRadius: '8px',
             boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
@@ -51,7 +50,6 @@ const Modal = ({ show, title, message, onConfirm, onCancel, type = 'info' }) => 
         modalMessage: {
             fontSize: '1rem',
             marginBottom: '1.5rem',
-            color: '#cbd5e0',
         },
         buttonContainer: {
             display: 'flex',
@@ -69,11 +67,9 @@ const Modal = ({ show, title, message, onConfirm, onCancel, type = 'info' }) => 
         },
         confirmButton: {
             backgroundColor: type === 'confirm' ? '#ef4444' : '#3b82f6', // Red for confirm delete, blue otherwise
-            color: 'white',
         },
         cancelButton: {
             backgroundColor: '#6b7280',
-            color: 'white',
         },
     };
 
@@ -119,7 +115,6 @@ const Modal = ({ show, title, message, onConfirm, onCancel, type = 'info' }) => 
 const styles = {
     topbar: {
         width: '100%',
-        backgroundColor: '#1c1c24',
         padding: '0.75rem 1.5rem',
         borderBottom: '1px solid #333',
         position: 'sticky',
@@ -138,44 +133,19 @@ const styles = {
         flexWrap: 'wrap', // for responsiveness
         // borderRadius: '5px',
     },
-    sidebarNavItem: {
-        color: '#ccc',
-        padding: '0.5rem 1rem',
-        borderRadius: '8px',
-        cursor: 'pointer',
-        transition: 'all 0.3s ease',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.5rem',
-    },
-    sidebarNavItemHover: {
-        backgroundColor: '#2e2e38',
-        color: '#fff',
-    },
-    sidebarNavItemActive: {
-        backgroundColor: '#3b82f6',
-        color: '#fff',
-        fontWeight: 'bold',
-    },
-    sidebarText: {
-        fontSize: '1rem',
-    },
     // Overall container for the entire admin panel
     container: {
-    display: "flex",
-    flexDirection: "column",
-    height: "100vh", // Full screen height
-    overflow: "hidden", // Prevent unwanted scroll
-  },
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh", // Full screen height
+        overflow: "hidden", // Prevent unwanted scroll
+    },
     // Top navigation bar styling
     topbar: {
-        backgroundColor: '#2c3e50', // Dark blue-gray
-        color: 'white',
         padding: '1rem 2rem',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
         height: '60px', // Fixed height for a consistent top bar
         borderBottom: '1px solid #1a252f',
         borderRadius: '0.5rem 0.5rem 0 0', // Rounded top corners
@@ -198,63 +168,20 @@ const styles = {
         flexGrow: 1, // Allows it to expand and fill available vertical space
         height: 'calc(100vh - 60px)', // Explicitly set height based on viewport minus topbar
     },
-    // Left sidebar navigation styling
-    sidebar: {
-        width: '250px', // Default width for larger screens
-        backgroundColor: '#34495e', // Slightly lighter blue-gray
-        color: 'white',
-        padding: '1.5rem 0',
-        boxShadow: '2px 0 10px rgba(0,0,0,0.1)',
-        display: 'flex',
-        flexDirection: 'column',
-        transition: 'width 0.3s ease-in-out', // Smooth transition for responsive collapse
-        flexShrink: 0, // Prevent sidebar from shrinking below its width
-        borderRadius: '0 0 0 0.5rem', // Rounded bottom-left corner
-        zIndex: 10, // Increased z-index to ensure it's above other elements
-    },
-    sidebarNav: {
-        listStyle: 'none',
-        padding: '0',
-        margin: '0',
-    },
-    sidebarNavItem: {
-        padding: '1rem 1.5rem',
-        cursor: 'pointer', // Explicitly set cursor to pointer
-        borderLeftWidth: '4px',
-        borderLeftStyle: 'solid',
-        borderLeftColor: 'transparent',
-        transition: 'background-color 0.2s ease-in-out, border-left-color 0.2s ease-in-out',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.75rem', // Space between icon and text
-        borderRadius: '0 0.5rem 0.5rem 0', // Slight rounding on the right for items
-        marginRight: '1rem', // Space from right edge of sidebar
-    },
-    sidebarNavItemHover: {
-        backgroundColor: '#4a637d', // Background on hover
-    },
-    sidebarNavItemActive: {
-        backgroundColor: '#4a637d', // Background for active item
-        borderLeftColor: '#3498db', // Active border color (bright blue)
-    },
-    sidebarText: {
-        opacity: 1,
-        transition: 'opacity 0.3s ease-in-out',
-    },
+    
     // Main content area styling
     content: {
-    flex: 1,
-    overflowY: "auto", // Enables vertical scroll
-    padding: "1rem",
-    maxHeight: "100%", // Ensure it respects parent's height
-  },
-  contentHeader: {
-    fontSize: "1.5rem",
-    fontWeight: "bold",
-    marginBottom: "1rem",
-  },
+        flex: 1,
+        overflowY: "auto", // Enables vertical scroll
+        padding: "1rem",
+        maxHeight: "100%", // Ensure it respects parent's height
+    },
+    contentHeader: {
+        fontSize: "1.5rem",
+        fontWeight: "bold",
+        marginBottom: "1rem",
+    },
     contentSection: {
-        backgroundColor: 'white',
         padding: '2rem',
         borderRadius: '8px',
         boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
@@ -264,13 +191,11 @@ const styles = {
     contentSectionTitle: {
         fontSize: '1.6rem',
         marginBottom: '1.2rem',
-        color: '#555',
         fontWeight: '600',
     },
     contentList: {
         listStyleType: 'disc',
         marginLeft: '1.5rem',
-        color: '#666',
         lineHeight: '1.8',
     },
     formGroup: {
@@ -280,7 +205,6 @@ const styles = {
         display: 'block',
         marginBottom: '0.5rem',
         fontWeight: 'bold',
-        color: '#555',
     },
     input: {
         width: '100%',
@@ -319,22 +243,6 @@ const styles = {
         transition: 'background-color 0.2s ease-in-out',
         marginRight: '0.5rem',
     },
-    primaryButton: {
-        backgroundColor: '#3498db',
-        color: 'white',
-    },
-    editButton: {
-        backgroundColor: '#f39c12',
-        color: 'white',
-    },
-    deleteButton: {
-        backgroundColor: '#e74c3c',
-        color: 'white',
-    },
-    cancelButton: {
-        backgroundColor: '#95a5a6',
-        color: 'white',
-    },
     listTable: {
         width: '100%',
         borderCollapse: 'collapse',
@@ -344,27 +252,20 @@ const styles = {
         boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
     },
     tableHeader: {
-        backgroundColor: '#e0e0e0',
         borderBottom: '1px solid #ddd',
         padding: '0.8rem',
         textAlign: 'left',
-        color: '#444',
     },
     tableRow: {
         borderBottom: '1px solid #eee',
         transition: 'background-color 0.1s ease-in-out',
     },
-    tableRowHover: {
-        backgroundColor: '#f5f5f5', // Hover effect for table rows
-    },
     tableCell: {
         padding: '0.8rem',
-        color: '#666',
     },
     noDataMessage: {
         textAlign: 'center',
         padding: '2rem',
-        color: '#888',
         fontSize: '1.1rem',
     },
 
@@ -372,21 +273,18 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
-        backgroundColor: '#f0f2f5', // Light grey background for the overall app
     },
     content: {
         flexGrow: 1, // Allows content to take up remaining space
         padding: '2rem',
         maxWidth: '1200px',
         margin: '2rem auto', // Center content horizontally
-        backgroundColor: '#ffffff',
         borderRadius: '12px',
         boxShadow: '0 8px 30px rgba(0, 0, 0, 0.08)',
         overflow: 'hidden', // Ensures no content spills out
     },
     contentHeader: {
         fontSize: '2.5rem',
-        color: '#2c3e50',
         marginBottom: '2rem',
         textAlign: 'center',
         fontWeight: '700',
@@ -396,8 +294,6 @@ const styles = {
 
     // --- TopBar Styles ---
     topbar: {
-        backgroundColor: '#2c3e50', // Darker, professional blue/grey
-        color: '#ffffff',
         padding: '0.8rem 1.5rem',
         display: 'flex',
         alignItems: 'center',
@@ -411,7 +307,6 @@ const styles = {
     topbarBrand: {
         fontSize: '1.8rem',
         fontWeight: 'bold',
-        color: '#ffffff',
         textDecoration: 'none',
         padding: '0.5rem 0',
     },
@@ -420,14 +315,10 @@ const styles = {
         fontSize: '1.8rem', // Slightly larger for better tap target
         background: 'none',
         border: 'none',
-        color: 'white',
         cursor: 'pointer',
         padding: '0.5rem 0.8rem',
         borderRadius: '5px',
         transition: 'background-color 0.2s ease',
-        '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        },
         // Will be hidden on desktop via <style jsx>
     },
     topbarNav: {
@@ -445,14 +336,11 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         gap: '0.6rem',
-        color: '#ffffff', // Default text color
         '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.15)',
             transform: 'translateY(-1px)',
         },
     },
     topbarNavItemActive: {
-        backgroundColor: '#007bff', // Active blue
         fontWeight: 'bold',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
         transform: 'translateY(-1px)',
@@ -464,24 +352,9 @@ const styles = {
         fontSize: '1rem',
     },
 
-    // --- Sidebar Item Styles (if you decide to use them in TopBar context) ---
-    // Note: These are reused from your SidebarItem, ensure consistency
-    sidebarNavItem: { // Base style for items, applied in TopBar
-        // This is a placeholder for `topbarNavItem` as you reused `sidebarNavItem` in TopBar
-        // It's better to have distinct styles or alias them.
-    },
-    sidebarNavItemActive: { // Also a placeholder for `topbarNavItemActive`
-        // Used in your TopBar, consider aliasing or mapping to topbarNavItemActive
-    },
-    sidebarText: { // Also a placeholder for `topbarNavText`
-        // Used in your TopBar, consider aliasing or mapping to topbarNavText
-    },
-
     // --- General Form & Content Styles (from previous responses, for completeness) ---
     contentSection: {
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-        color: "#333",
-        backgroundColor: "#ffffff",
         borderRadius: "8px",
         boxShadow: "0 4px 15px rgba(0, 0, 0, 0.08)",
         lineHeight: "1.6",
@@ -493,7 +366,6 @@ const styles = {
     },
     label: {
         fontWeight: "600",
-        color: "#444",
         fontSize: "0.95rem",
     },
     input: {
@@ -523,10 +395,7 @@ const styles = {
         gap: "0.5rem",
     },
     primaryButton: {
-        backgroundColor: "#007bff",
-        color: "#fff",
         "&:hover": {
-            backgroundColor: "#0056b3",
             transform: "translateY(-1px)",
         },
     },
@@ -605,7 +474,6 @@ const MiniTopBar = ({ activeSection, setActiveSection, styles }) => {
                     gap: 4px;
                     width: 40px;
                     height: 28px;
-                    background: transparent;
                     border: none;
                     cursor: pointer;
                     padding: 0;
@@ -614,7 +482,6 @@ const MiniTopBar = ({ activeSection, setActiveSection, styles }) => {
                 .menu-toggle .bar {
                     width: 15px;
                     height: 3px;
-                    background-color: #fff;
                     transition: all 0.3s ease;
                 }
                 .menu-toggle.open .bar:nth-child(1) {
@@ -677,15 +544,15 @@ export default function AdminPanelPage() {
     // State for active section in the sidebar
     const [activeSection, setActiveSection] = useState('dashboard');
     const { page_info_function } = useContext(context);
-    
-      useEffect(() => {
+
+    useEffect(() => {
         page_info_function("EDIT Y'R PROFILE", "Welcome Ashish!", "Admin");
-      }, []);
+    }, []);
 
     // States for CRUD data: projects (initial dummy data)
     const [projects, setProjects] = useState([
-        { id: 'proj1', name: 'E-commerce Redesign', status: 'In Progress' },
-        { id: 'proj2', name: 'Mobile App Launch', status: 'Completed' },
+        { id: 'proj1', title: 'E-commerce Redesign', status: 'In Progress' },
+        { id: 'proj2', title: 'Mobile App Launch', status: 'Completed' },
     ]);
     const [newProjectName, setNewProjectName] = useState('');
     const [newProjectStatus, setNewProjectStatus] = useState('');
@@ -1057,7 +924,7 @@ export default function AdminPanelPage() {
 
     return (
         <Layout noSidebar>
-            <div style={styles.container}>
+            <div className="trm-blog-categories" style={styles.container}>
                 {/* TopBar Navigation */}
                 <MiniTopBar
                     activeSection={activeSection}

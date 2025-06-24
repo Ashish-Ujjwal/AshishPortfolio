@@ -182,56 +182,55 @@ const styles = {
 // --- Section Components (Moved from renderContent switch cases) ---
 
 const DashboardContent = ({ projects, skills, employmentHistory, testimonials, blogs }) => (
-  <div style={{ width: '100%', padding: '1.5rem', backgroundColor: '#f9fafb', borderRadius: '0.75rem', boxShadow: '0 2px 6px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-    <h3 style={{ fontSize: '1.75rem', fontWeight: 600, color: '#2d3748' }}>📊 Dashboard Overview</h3>
-    <p style={{ fontSize: '1rem', color: '#4a5568' }}>Welcome to your admin dashboard. Below is a detailed summary of your site's key activities and entries.</p>
+  <div style={{ width: '100%', borderRadius: '0.75rem', boxShadow: '0 2px 6px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    <p style={{ fontSize: '1rem'}}>Welcome to your admin dashboard. Below is a detailed summary of your site's key activities and entries.</p>
 
     {/* Projects */}
-    <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600, color: '#2d3748' }}>📁 Projects ({projects.length})</h4>
-      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', color: '#4a5568', listStyle: 'disc' }}>
+    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1rem' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600}}>📁 Projects ({projects.length})</h4>
+      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', listStyle: 'disc' }}>
         {projects.map((p, i) => (
-          <li key={i}><strong>{p.title}</strong> — {p.description?.slice(0, 60) || 'No description provided'}...</li>
+          <li key={i}><strong>{p.title}</strong> — {p.status?.slice(0, 60) || 'No description provided'}</li>
         ))}
       </ul>
     </div>
 
     {/* Skills */}
-    <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600, color: '#2d3748' }}>🛠️ Skills ({skills.length})</h4>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', fontSize: '0.95rem', color: '#4a5568' }}>
+    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600}}>🛠️ Skills ({skills.length})</h4>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', fontSize: '0.95rem', justifyContent: 'center' }}>
         {skills.map((s, i) => (
-          <span key={i} style={{ backgroundColor: '#edf2f7', padding: '0.25rem 0.75rem', borderRadius: '9999px' }}>{s.name}</span>
+          <span key={i} style={{ padding: '0.25rem 0.75rem', borderRadius: '9999px' }}>{s.name}</span>
         ))}
       </div>
     </div>
 
     {/* Employment History */}
-    <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600, color: '#2d3748' }}>🏢 Employment History ({employmentHistory.length})</h4>
-      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', color: '#4a5568', listStyle: 'disc' }}>
+    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600}}>🏢 Employment History ({employmentHistory.length})</h4>
+      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', listStyle: 'disc' }}>
         {employmentHistory.map((job, i) => (
           <li key={i}>
-            <strong>{job.role}</strong> at <em>{job.company}</em> ({job.startDate} to {job.endDate || 'Present'})
+            <strong>{job.title}</strong> at <em>{job.company}</em> ({job.duration})
           </li>
         ))}
       </ul>
     </div>
 
     {/* Testimonials */}
-    <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600, color: '#2d3748' }}>💬 Testimonials ({testimonials.length})</h4>
-      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', color: '#4a5568', listStyle: 'disc' }}>
+    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600}}>💬 Testimonials ({testimonials.length})</h4>
+      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', listStyle: 'disc' }}>
         {testimonials.map((t, i) => (
-          <li key={i}><strong>{t.name}</strong>: {t.message?.slice(0, 60) || 'No message'}... {t.approved ? '✅ Approved' : '⏳ Pending'}</li>
+          <li key={i}><strong>{t.author}</strong>: {t.text?.slice(0, 60) || 'No message'}... {t.approved ? '✅ Approved' : '⏳ Pending'}</li>
         ))}
       </ul>
     </div>
 
     {/* Blogs */}
-    <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600, color: '#2d3748' }}>📝 Blog Posts ({blogs.length})</h4>
-      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', color: '#4a5568', listStyle: 'disc' }}>
+    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600}}>📝 Blog Posts ({blogs.length})</h4>
+      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', listStyle: 'disc' }}>
         {blogs.map((b, i) => (
           <li key={i}>
             <strong>{b.title}</strong> — {b.published ? '📢 Published' : '📝 Draft'} | {b.createdAt || 'No date'}
@@ -252,13 +251,13 @@ const ProjectsContent = ({
   editingProject, setEditingProject,
   addProject, updateProject, deleteProject
 }) => (
-  <div style={{ width: '100%', padding: '1.5rem', backgroundColor: '#f9fafb', borderRadius: '0.75rem', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
-    <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1rem', color: '#2d3748' }}>📁 Projects Management</h3>
+  <div style={{ padding: '1.5rem', borderRadius: '0.75rem', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
+    <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1rem'}}>📁 Projects Management</h3>
 
     {/* Add Project Form */}
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
       <div>
-        <label htmlFor="newProjectName" style={{ fontWeight: 500, color: '#4a5568', display: 'block', marginBottom: '0.25rem' }}>Project Name</label>
+        <label htmlFor="newProjectName" style={{ fontWeight: 500, display: 'block', marginBottom: '0.25rem' }}>Project Name</label>
         <input
           id="newProjectName"
           type="text"
@@ -270,7 +269,7 @@ const ProjectsContent = ({
       </div>
 
       <div>
-        <label htmlFor="newProjectStatus" style={{ fontWeight: 500, color: '#4a5568', display: 'block', marginBottom: '0.25rem' }}>Status</label>
+        <label htmlFor="newProjectStatus" style={{ fontWeight: 500,  display: 'block', marginBottom: '0.25rem' }}>Status</label>
         <input
           id="newProjectStatus"
           type="text"
@@ -283,14 +282,14 @@ const ProjectsContent = ({
 
       <button
         onClick={addProject}
-        style={{ backgroundColor: '#4caf50', color: 'white', padding: '0.6rem 1rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600 }}
+        style={{ padding: '0.6rem 1rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600 }}
       >
         ➕ Add Project
       </button>
     </div>
 
     {/* Projects Table */}
-    <h4 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#2d3748', marginBottom: '0.75rem' }}>📦 Existing Projects</h4>
+    <h4 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.75rem' }}>📦 Existing Projects</h4>
 
     {projects.length === 0 ? (
       <p style={{ color: '#718096' }}>No projects added yet.</p>
@@ -298,7 +297,7 @@ const ProjectsContent = ({
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
-            <tr style={{ backgroundColor: '#edf2f7', textAlign: 'left' }}>
+            <tr style={{ textAlign: 'left' }}>
               <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Name</th>
               <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Status</th>
               <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Actions</th>
@@ -317,7 +316,7 @@ const ProjectsContent = ({
                     <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
                       <input
                         type="text"
-                        value={editingProject.name}
+                        value={editingProject.title}
                         onChange={(e) => setEditingProject({ ...editingProject, name: e.target.value })}
                         style={{ width: '100%', padding: '0.4rem', borderRadius: '0.375rem', border: '1px solid #cbd5e0' }}
                       />
@@ -333,13 +332,13 @@ const ProjectsContent = ({
                     <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
                       <button
                         onClick={() => updateProject(project.id)}
-                        style={{ marginRight: '0.5rem', backgroundColor: '#3b82f6', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                        style={{ marginRight: '0.5rem', backgroundColor: '#3b82f6', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
                       >
                         Save
                       </button>
                       <button
                         onClick={() => setEditingProject(null)}
-                        style={{ backgroundColor: '#e53e3e', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                        style={{ backgroundColor: '#e53e3e', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
                       >
                         Cancel
                       </button>
@@ -352,7 +351,7 @@ const ProjectsContent = ({
                     <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
                       <button
                         onClick={() => setEditingProject(project)}
-                        style={{ marginRight: '0.5rem', backgroundColor: '#3182ce', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                        style={{ marginRight: '0.5rem', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
                       >
                         Edit
                       </button>
