@@ -16,6 +16,33 @@ import { DashboardContent, ProjectsContent, SkillsContent, EmploymentHistoryCont
 //   );
 // };
 
+// --- DUMMY DATA ---
+
+const initialProjects = [
+  { id: 'proj1', title: 'E-commerce Redesign', status: 'In Progress' },
+  { id: 'proj2', title: 'Mobile App Launch', status: 'Completed' },
+];
+
+const initialSkills = [
+  { id: 'skill1', name: 'React.js', level: 'Advanced' },
+  { id: 'skill2', name: 'Node.js', level: 'Intermediate' },
+];
+
+const initialEmploymentHistory = [
+  { id: 'emp1', title: 'Senior Developer', company: 'Tech Solutions', duration: '2020-Present' },
+  { id: 'emp2', title: 'Junior Developer', company: 'Web Innovators', duration: '2018-2020' },
+];
+
+const initialTestimonials = [
+  { id: 'test1', text: 'Great service!', author: 'Client A', approved: true },
+  { id: 'test2', text: 'Very professional.', author: 'Client B', approved: false },
+];
+
+const initialBlogs = [
+  { id: 'blog1', title: 'Getting Started with React Hooks', content: '...', published: true },
+  { id: 'blog2', title: 'Advanced CSS Techniques', content: '...', published: false },
+];
+
 // Custom Modal Component for confirmations/messages (replaces alert/confirm)
 const Modal = ({ show, title, message, onConfirm, onCancel, type = 'info' }) => {
     if (!show) return null;
@@ -482,6 +509,8 @@ const MiniTopBar = ({ activeSection, setActiveSection, styles }) => {
                 .menu-toggle .bar {
                     width: 15px;
                     height: 3px;
+                    color: black;
+                    background-color: black;
                     transition: all 0.3s ease;
                 }
                 .menu-toggle.open .bar:nth-child(1) {
@@ -550,48 +579,33 @@ export default function AdminPanelPage() {
     }, []);
 
     // States for CRUD data: projects (initial dummy data)
-    const [projects, setProjects] = useState([
-        { id: 'proj1', title: 'E-commerce Redesign', status: 'In Progress' },
-        { id: 'proj2', title: 'Mobile App Launch', status: 'Completed' },
-    ]);
+    const [projects, setProjects] = useState(initialProjects);
     const [newProjectName, setNewProjectName] = useState('');
     const [newProjectStatus, setNewProjectStatus] = useState('');
     const [editingProject, setEditingProject] = useState(null); // Stores the project being edited
 
     // States for CRUD data: skills (initial dummy data)
-    const [skills, setSkills] = useState([
-        { id: 'skill1', name: 'React.js', level: 'Advanced' },
-        { id: 'skill2', name: 'Node.js', level: 'Intermediate' },
-    ]);
+    const [skills, setSkills] = useState(initialSkills);
     const [newSkillName, setNewSkillName] = useState('');
     const [newSkillLevel, setNewSkillLevel] = useState('');
     const [editingSkill, setEditingSkill] = useState(null);
 
     // States for CRUD data: employment history (initial dummy data)
-    const [employmentHistory, setEmploymentHistory] = useState([
-        { id: 'emp1', title: 'Senior Developer', company: 'Tech Solutions', duration: '2020-Present' },
-        { id: 'emp2', title: 'Junior Developer', company: 'Web Innovators', duration: '2018-2020' },
-    ]);
+    const [employmentHistory, setEmploymentHistory] = useState(initialEmploymentHistory);
     const [newEmploymentTitle, setNewEmploymentTitle] = useState('');
     const [newEmploymentCompany, setNewEmploymentCompany] = useState('');
     const [newEmploymentDuration, setNewEmploymentDuration] = useState('');
     const [editingEmployment, setEditingEmployment] = useState(null);
 
     // States for CRUD data: testimonials (initial dummy data)
-    const [testimonials, setTestimonials] = useState([
-        { id: 'test1', text: 'Great service!', author: 'Client A', approved: true },
-        { id: 'test2', text: 'Very professional.', author: 'Client B', approved: false },
-    ]);
+    const [testimonials, setTestimonials] = useState(initialTestimonials);
     const [newTestimonialText, setNewTestimonialText] = useState('');
     const [newTestimonialAuthor, setNewTestimonialAuthor] = useState('');
     const [newTestimonialApproved, setNewTestimonialApproved] = useState(false);
     const [editingTestimonial, setEditingTestimonial] = useState(null);
 
     // States for CRUD data: blogs (initial dummy data)
-    const [blogs, setBlogs] = useState([
-        { id: 'blog1', title: 'Getting Started with React Hooks', content: '...', published: true },
-        { id: 'blog2', title: 'Advanced CSS Techniques', content: '...', published: false },
-    ]);
+    const [blogs, setBlogs] = useState(initialBlogs);
     const [newBlogTitle, setNewBlogTitle] = useState('');
     const [newBlogContent, setNewBlogContent] = useState('');
     const [newBlogPublished, setNewBlogPublished] = useState(false);
@@ -924,7 +938,7 @@ export default function AdminPanelPage() {
 
     return (
         <Layout noSidebar>
-            <div className="trm-blog-categories" style={styles.container}>
+            <div style={styles.container}>
                 {/* TopBar Navigation */}
                 <MiniTopBar
                     activeSection={activeSection}

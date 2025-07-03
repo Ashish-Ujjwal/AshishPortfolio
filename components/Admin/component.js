@@ -182,12 +182,12 @@ const styles = {
 // --- Section Components (Moved from renderContent switch cases) ---
 
 const DashboardContent = ({ projects, skills, employmentHistory, testimonials, blogs }) => (
-  <div style={{ width: '100%', borderRadius: '0.75rem', boxShadow: '0 2px 6px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-    <p style={{ fontSize: '1rem'}}>Welcome to your admin dashboard. Below is a detailed summary of your site's key activities and entries.</p>
+  <>
+    <p style={{ textAlign: "justify" }}>Welcome to your admin dashboard. Below is a detailed summary of your site's key activities and entries.</p>
 
     {/* Projects */}
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1rem' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600}}>📁 Projects ({projects.length})</h4>
+    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1rem', margin: '15px' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>📁 Projects ({projects.length})</h4>
       <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', listStyle: 'disc' }}>
         {projects.map((p, i) => (
           <li key={i}><strong>{p.title}</strong> — {p.status?.slice(0, 60) || 'No description provided'}</li>
@@ -196,8 +196,8 @@ const DashboardContent = ({ projects, skills, employmentHistory, testimonials, b
     </div>
 
     {/* Skills */}
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600}}>🛠️ Skills ({skills.length})</h4>
+    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem', margin: '15px' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>🛠️ Skills ({skills.length})</h4>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', fontSize: '0.95rem', justifyContent: 'center' }}>
         {skills.map((s, i) => (
           <span key={i} style={{ padding: '0.25rem 0.75rem', borderRadius: '9999px' }}>{s.name}</span>
@@ -206,8 +206,8 @@ const DashboardContent = ({ projects, skills, employmentHistory, testimonials, b
     </div>
 
     {/* Employment History */}
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600}}>🏢 Employment History ({employmentHistory.length})</h4>
+    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem', margin: '15px' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>🏢 Employment History ({employmentHistory.length})</h4>
       <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', listStyle: 'disc' }}>
         {employmentHistory.map((job, i) => (
           <li key={i}>
@@ -218,8 +218,8 @@ const DashboardContent = ({ projects, skills, employmentHistory, testimonials, b
     </div>
 
     {/* Testimonials */}
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600}}>💬 Testimonials ({testimonials.length})</h4>
+    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem', margin: '15px' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>💬 Testimonials ({testimonials.length})</h4>
       <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', listStyle: 'disc' }}>
         {testimonials.map((t, i) => (
           <li key={i}><strong>{t.author}</strong>: {t.text?.slice(0, 60) || 'No message'}... {t.approved ? '✅ Approved' : '⏳ Pending'}</li>
@@ -228,8 +228,8 @@ const DashboardContent = ({ projects, skills, employmentHistory, testimonials, b
     </div>
 
     {/* Blogs */}
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600}}>📝 Blog Posts ({blogs.length})</h4>
+    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem', margin: '15px' }}>
+      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>📝 Blog Posts ({blogs.length})</h4>
       <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', listStyle: 'disc' }}>
         {blogs.map((b, i) => (
           <li key={i}>
@@ -238,7 +238,7 @@ const DashboardContent = ({ projects, skills, employmentHistory, testimonials, b
         ))}
       </ul>
     </div>
-  </div>
+  </>
 );
 
 
@@ -251,126 +251,126 @@ const ProjectsContent = ({
   editingProject, setEditingProject,
   addProject, updateProject, deleteProject
 }) => (
-  <div style={{ padding: '1.5rem', borderRadius: '0.75rem', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
-    <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1rem'}}>📁 Projects Management</h3>
+  <>
+    <p style={{ textAlign: "justify" }}>Welcome to your admin dashboard. Below is a detailed summary of your site's key activities and entries.</p>
 
-    {/* Add Project Form */}
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
-      <div>
-        <label htmlFor="newProjectName" style={{ fontWeight: 500, display: 'block', marginBottom: '0.25rem' }}>Project Name</label>
-        <input
-          id="newProjectName"
-          type="text"
-          placeholder="Enter project name"
-          value={newProjectName}
-          onChange={(e) => setNewProjectName(e.target.value)}
-          style={{ width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem', outline: 'none' }}
-        />
+      {/* Add Project Form */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
+        <div>
+          <label htmlFor="newProjectName" style={{ fontWeight: 500, display: 'block', marginBottom: '0.25rem' }}>Project Name</label>
+          <input
+            id="newProjectName"
+            type="text"
+            placeholder="Enter project name"
+            value={newProjectName}
+            onChange={(e) => setNewProjectName(e.target.value)}
+            style={{ width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem', outline: 'none' }}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="newProjectStatus" style={{ fontWeight: 500, display: 'block', marginBottom: '0.25rem' }}>Status</label>
+          <input
+            id="newProjectStatus"
+            type="text"
+            placeholder="e.g., Active, Completed, In Progress"
+            value={newProjectStatus}
+            onChange={(e) => setNewProjectStatus(e.target.value)}
+            style={{ width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem', outline: 'none' }}
+          />
+        </div>
+
+        <button
+          onClick={addProject}
+          style={{ padding: '0.6rem 1rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600 }}
+        >
+          ➕ Add Project
+        </button>
       </div>
 
-      <div>
-        <label htmlFor="newProjectStatus" style={{ fontWeight: 500,  display: 'block', marginBottom: '0.25rem' }}>Status</label>
-        <input
-          id="newProjectStatus"
-          type="text"
-          placeholder="e.g., Active, Completed, In Progress"
-          value={newProjectStatus}
-          onChange={(e) => setNewProjectStatus(e.target.value)}
-          style={{ width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem', outline: 'none' }}
-        />
-      </div>
+      {/* Projects Table */}
+      <h4 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.75rem' }}>📦 Existing Projects</h4>
 
-      <button
-        onClick={addProject}
-        style={{ padding: '0.6rem 1rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600 }}
-      >
-        ➕ Add Project
-      </button>
-    </div>
-
-    {/* Projects Table */}
-    <h4 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.75rem' }}>📦 Existing Projects</h4>
-
-    {projects.length === 0 ? (
-      <p style={{ color: '#718096' }}>No projects added yet.</p>
-    ) : (
-      <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr style={{ textAlign: 'left' }}>
-              <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Name</th>
-              <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Status</th>
-              <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {projects.map((project) => (
-              <tr
-                key={project.id}
-                style={{ transition: 'background-color 0.2s ease-in-out' }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-              >
-                {editingProject && editingProject.id === project.id ? (
-                  <>
-                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
-                      <input
-                        type="text"
-                        value={editingProject.title}
-                        onChange={(e) => setEditingProject({ ...editingProject, name: e.target.value })}
-                        style={{ width: '100%', padding: '0.4rem', borderRadius: '0.375rem', border: '1px solid #cbd5e0' }}
-                      />
-                    </td>
-                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
-                      <input
-                        type="text"
-                        value={editingProject.status}
-                        onChange={(e) => setEditingProject({ ...editingProject, status: e.target.value })}
-                        style={{ width: '100%', padding: '0.4rem', borderRadius: '0.375rem', border: '1px solid #cbd5e0' }}
-                      />
-                    </td>
-                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
-                      <button
-                        onClick={() => updateProject(project.id)}
-                        style={{ marginRight: '0.5rem', backgroundColor: '#3b82f6', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
-                      >
-                        Save
-                      </button>
-                      <button
-                        onClick={() => setEditingProject(null)}
-                        style={{ backgroundColor: '#e53e3e', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
-                      >
-                        Cancel
-                      </button>
-                    </td>
-                  </>
-                ) : (
-                  <>
-                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>{project.name}</td>
-                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>{project.status}</td>
-                    <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
-                      <button
-                        onClick={() => setEditingProject(project)}
-                        style={{ marginRight: '0.5rem', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => deleteProject(project.id)}
-                        style={{ backgroundColor: '#e53e3e', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </>
-                )}
+      {projects.length === 0 ? (
+        <p style={{ color: '#718096' }}>No projects added yet.</p>
+      ) : (
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr style={{ textAlign: 'left' }}>
+                <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Name</th>
+                <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Status</th>
+                <th style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    )}
-  </div>
+            </thead>
+            <tbody>
+              {projects.map((project) => (
+                <tr
+                  key={project.id}
+                  style={{ transition: 'background-color 0.2s ease-in-out' }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                >
+                  {editingProject && editingProject.id === project.id ? (
+                    <>
+                      <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
+                        <input
+                          type="text"
+                          value={editingProject.title}
+                          onChange={(e) => setEditingProject({ ...editingProject, name: e.target.value })}
+                          style={{ width: '100%', padding: '0.4rem', borderRadius: '0.375rem', border: '1px solid #cbd5e0' }}
+                        />
+                      </td>
+                      <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
+                        <input
+                          type="text"
+                          value={editingProject.status}
+                          onChange={(e) => setEditingProject({ ...editingProject, status: e.target.value })}
+                          style={{ width: '100%', padding: '0.4rem', borderRadius: '0.375rem', border: '1px solid #cbd5e0' }}
+                        />
+                      </td>
+                      <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
+                        <button
+                          onClick={() => updateProject(project.id)}
+                          style={{ marginRight: '0.5rem', backgroundColor: '#3b82f6', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={() => setEditingProject(null)}
+                          style={{ backgroundColor: '#e53e3e', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                        >
+                          Cancel
+                        </button>
+                      </td>
+                    </>
+                  ) : (
+                    <>
+                      <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>{project.name}</td>
+                      <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>{project.status}</td>
+                      <td style={{ padding: '0.75rem', borderBottom: '1px solid #e2e8f0' }}>
+                        <button
+                          onClick={() => setEditingProject(project)}
+                          style={{ marginRight: '0.5rem', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => deleteProject(project.id)}
+                          style={{ backgroundColor: '#e53e3e', color: 'white', padding: '0.4rem 0.8rem', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+  </>
 );
 
 
@@ -381,11 +381,11 @@ const SkillsContent = ({
   editingSkill, setEditingSkill,
   addSkill, updateSkill, deleteSkill
 }) => (
-  <div style={{ width: '100%', padding: '1.5rem', backgroundColor: '#f9fafb', borderRadius: '0.75rem', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
-    <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1rem', color: '#2d3748' }}>🧠 Skills Showcase</h3>
+  <>
+    <p style={{ textAlign: "justify" }}>Welcome to your admin dashboard. Below is a detailed summary of your site's key activities and entries.</p>
 
     {/* Add Skill Form */}
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
+    <div style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
       <div>
         <label htmlFor="newSkillName" style={{ fontWeight: 500, color: '#4a5568', display: 'block', marginBottom: '0.25rem' }}>Skill Name</label>
         <input
@@ -500,7 +500,7 @@ const SkillsContent = ({
         </table>
       </div>
     )}
-  </div>
+  </>
 );
 
 
@@ -520,13 +520,11 @@ const EmploymentHistoryContent = ({
   updateEmployment,
   deleteEmployment,
 }) => (
-  <div style={{ width: "100%", padding: "1.5rem", background: "#f9fafb", borderRadius: "0.75rem", boxShadow: "0 2px 6px rgba(0,0,0,0.05)", display: "flex", flexDirection: "column", gap: "1.5rem", margin: "0 auto" }}>
-
-    {/* Title */}
-    <h3 style={{ fontSize: "1.5rem", fontWeight: 600, color: "#2d3748" }}>🏢 Employment History</h3>
+  <>
+    <p style={{ textAlign: "justify" }}>Welcome to your admin dashboard. Below is a detailed summary of your site's key activities and entries.</p>
 
     {/* Add Form */}
-    <div style={{ background: "#fff", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: "0.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+    <div style={{ background: "#fff", border: "1px solid #e2e8f0", padding: "1rem", margin: '15px 0', borderRadius: "0.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
       <input
         type="text"
         placeholder="Job Title"
@@ -629,7 +627,7 @@ const EmploymentHistoryContent = ({
         ))}
       </div>
     )}
-  </div>
+  </>
 );
 
 
@@ -719,120 +717,118 @@ const TestimonialsContent = ({
   };
 
   return (
-    <div style={containerStyle}>
-      <h3 style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1.5rem" }}>
-        📝 Testimonials Management
-      </h3>
-
-      {/* Add Form */}
-      <div>
-        <textarea
-          placeholder="Enter testimonial text"
-          value={newTestimonialText}
-          onChange={(e) => setNewTestimonialText(e.target.value)}
-          style={textareaStyle}
-        />
-        <input
-          type="text"
-          placeholder="Author"
-          value={newTestimonialAuthor}
-          onChange={(e) => setNewTestimonialAuthor(e.target.value)}
-          style={inputStyle}
-        />
-        <label style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
-          <input
-            type="checkbox"
-            checked={newTestimonialApproved}
-            onChange={(e) => setNewTestimonialApproved(e.target.checked)}
-            style={checkboxStyle}
+    <>
+      <p style={{ textAlign: "justify" }}>Welcome to your admin dashboard. Below is a detailed summary of your site's key activities and entries.</p>
+      <div style={containerStyle}>
+        {/* Add Form */}
+        <div>
+          <textarea
+            placeholder="Enter testimonial text"
+            value={newTestimonialText}
+            onChange={(e) => setNewTestimonialText(e.target.value)}
+            style={textareaStyle}
           />
-          Approved
-        </label>
-        <button
-          onClick={addTestimonial}
-          style={buttonStyle("#4caf50")}
-        >
-          Add Testimonial
-        </button>
-      </div>
+          <input
+            type="text"
+            placeholder="Author"
+            value={newTestimonialAuthor}
+            onChange={(e) => setNewTestimonialAuthor(e.target.value)}
+            style={inputStyle}
+          />
+          <label style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
+            <input
+              type="checkbox"
+              checked={newTestimonialApproved}
+              onChange={(e) => setNewTestimonialApproved(e.target.checked)}
+              style={checkboxStyle}
+            />
+            Approved
+          </label>
+          <button
+            onClick={addTestimonial}
+            style={buttonStyle("#4caf50")}
+          >
+            Add Testimonial
+          </button>
+        </div>
 
-      <h4 style={{ marginTop: "2.5rem", fontSize: "1.25rem", fontWeight: "600" }}>
-        📜 Existing Testimonials
-      </h4>
+        <h4 style={{ marginTop: "2.5rem", fontSize: "1.25rem", fontWeight: "600" }}>
+          📜 Existing Testimonials
+        </h4>
 
-      {testimonials.length === 0 ? (
-        <p style={{ color: "#718096", marginTop: "1rem" }}>No testimonials added yet.</p>
-      ) : (
-        testimonials.map((t) => {
-          const isEditing = editingTestimonial && editingTestimonial.id === t.id;
-          return (
-            <div key={t.id} style={rowBoxStyle}>
-              {isEditing ? (
-                <div style={{ width: "100%" }}>
-                  <textarea
-                    value={editingTestimonial.text}
-                    onChange={(e) => setEditingTestimonial({ ...editingTestimonial, text: e.target.value })}
-                    style={textareaStyle}
-                  />
-                  <input
-                    type="text"
-                    value={editingTestimonial.author}
-                    onChange={(e) => setEditingTestimonial({ ...editingTestimonial, author: e.target.value })}
-                    style={inputStyle}
-                  />
-                  <label style={{ display: "flex", alignItems: "center", marginBottom: "0.75rem" }}>
-                    <input
-                      type="checkbox"
-                      checked={editingTestimonial.approved}
-                      onChange={(e) => setEditingTestimonial({ ...editingTestimonial, approved: e.target.checked })}
-                      style={checkboxStyle}
+        {testimonials.length === 0 ? (
+          <p style={{ color: "#718096", marginTop: "1rem" }}>No testimonials added yet.</p>
+        ) : (
+          testimonials.map((t) => {
+            const isEditing = editingTestimonial && editingTestimonial.id === t.id;
+            return (
+              <div key={t.id} style={rowBoxStyle}>
+                {isEditing ? (
+                  <div style={{ width: "100%" }}>
+                    <textarea
+                      value={editingTestimonial.text}
+                      onChange={(e) => setEditingTestimonial({ ...editingTestimonial, text: e.target.value })}
+                      style={textareaStyle}
                     />
-                    Approved
-                  </label>
-                  <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "0.5rem" }}>
-                    <button
-                      onClick={() => updateTestimonial(t.id)}
-                      style={buttonStyle("#3182ce")}
-                    >
-                      <FaEdit /> Save
-                    </button>
-                    <button
-                      onClick={() => setEditingTestimonial(null)}
-                      style={buttonStyle("#e53e3e")}
-                    >
-                      Cancel
-                    </button>
+                    <input
+                      type="text"
+                      value={editingTestimonial.author}
+                      onChange={(e) => setEditingTestimonial({ ...editingTestimonial, author: e.target.value })}
+                      style={inputStyle}
+                    />
+                    <label style={{ display: "flex", alignItems: "center", marginBottom: "0.75rem" }}>
+                      <input
+                        type="checkbox"
+                        checked={editingTestimonial.approved}
+                        onChange={(e) => setEditingTestimonial({ ...editingTestimonial, approved: e.target.checked })}
+                        style={checkboxStyle}
+                      />
+                      Approved
+                    </label>
+                    <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "0.5rem" }}>
+                      <button
+                        onClick={() => updateTestimonial(t.id)}
+                        style={buttonStyle("#3182ce")}
+                      >
+                        <FaEdit /> Save
+                      </button>
+                      <button
+                        onClick={() => setEditingTestimonial(null)}
+                        style={buttonStyle("#e53e3e")}
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div style={{ width: "100%" }}>
-                  <div style={{ fontWeight: 600 }}>{t.text}</div>
-                  <div>Author: {t.author}</div>
-                  <div>Approved: {t.approved ? "Yes" : "No"}</div>
-                  <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "0.5rem", marginTop: "0.5rem" }}>
-                    <button
-                      onClick={() => setEditingTestimonial(t)}
-                      style={buttonStyle("#3182ce")}
-                    >
-                      <FaEdit /> Edit
-                    </button>
-                    <button
-                      onClick={() => deleteTestimonial(t.id)}
-                      style={buttonStyle("#e53e3e")}
-                    >
-                      <FaTrash /> Delete
-                    </button>
+                ) : (
+                  <div style={{ width: "100%" }}>
+                    <div style={{ fontWeight: 600 }}>{t.text}</div>
+                    <div>Author: {t.author}</div>
+                    <div>Approved: {t.approved ? "Yes" : "No"}</div>
+                    <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "0.5rem", marginTop: "0.5rem" }}>
+                      <button
+                        onClick={() => setEditingTestimonial(t)}
+                        style={buttonStyle("#3182ce")}
+                      >
+                        <FaEdit /> Edit
+                      </button>
+                      <button
+                        onClick={() => deleteTestimonial(t.id)}
+                        style={buttonStyle("#e53e3e")}
+                      >
+                        <FaTrash /> Delete
+                      </button>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          );
-        })
-      )}
-    </div>
+                )}
+              </div>
+            );
+          })
+        )}
+      </div>
+    </>
   );
 };
-
 
 
 const BlogsContent = ({
@@ -851,93 +847,79 @@ const BlogsContent = ({
   deleteBlog,
 }) => {
   return (
-    <div style={{
-      width: '100%',
-      padding: '1.5rem',
-      backgroundColor: '#f9fafb',
-      borderRadius: '0.75rem',
-      boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '1.5rem',
-      boxSizing: 'border-box',
-    }}>
-      <h3 style={{ fontSize: '1.75rem', fontWeight: 600, color: '#2d3748' }}>📝 Manage Blog Posts</h3>
+    <>
+      <p style={{ textAlign: "justify" }}>Welcome to your admin dashboard. Below is a detailed summary of your site's key activities and entries.</p>
 
       {/* Add Blog Form */}
-      <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem' }}>
-        <h4 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#2d3748', marginBottom: '1rem' }}>➕ Add New Blog</h4>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <div>
-            <label htmlFor="newBlogTitle" style={{ fontWeight: 600, color: '#4a5568' }}>Title</label>
-            <input
-              id="newBlogTitle"
-              type="text"
-              placeholder="Enter blog title"
-              value={newBlogTitle}
-              onChange={(e) => setNewBlogTitle(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '0.5rem',
-                marginTop: '0.25rem',
-                borderRadius: '0.375rem',
-                border: '1px solid #cbd5e0',
-                fontSize: '1rem',
-                boxSizing: 'border-box',
-              }}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="newBlogContent" style={{ fontWeight: 600, color: '#4a5568' }}>Content</label>
-            <textarea
-              id="newBlogContent"
-              placeholder="Write your blog content here..."
-              value={newBlogContent}
-              onChange={(e) => setNewBlogContent(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '0.5rem',
-                marginTop: '0.25rem',
-                borderRadius: '0.375rem',
-                border: '1px solid #cbd5e0',
-                fontSize: '1rem',
-                resize: 'vertical',
-                minHeight: '120px',
-                boxSizing: 'border-box',
-              }}
-            />
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <input
-              id="newBlogPublished"
-              type="checkbox"
-              checked={newBlogPublished}
-              onChange={(e) => setNewBlogPublished(e.target.checked)}
-              style={{ width: '16px', height: '16px' }}
-            />
-            <label htmlFor="newBlogPublished" style={{ fontWeight: 500, color: '#4a5568' }}>Mark as Published</label>
-          </div>
-
-          <button
-            onClick={addBlog}
+      <div style={{ display: 'flex', margin: '15px 0', flexDirection: 'column', gap: '1rem' }}>
+        <div>
+          <label htmlFor="newBlogTitle" style={{ fontWeight: 600, color: '#4a5568' }}>Title</label>
+          <input
+            id="newBlogTitle"
+            type="text"
+            placeholder="Enter blog title"
+            value={newBlogTitle}
+            onChange={(e) => setNewBlogTitle(e.target.value)}
             style={{
-              alignSelf: 'flex-start',
-              padding: '0.6rem 1rem',
-              backgroundColor: '#3182ce',
-              color: 'white',
-              border: 'none',
+              width: '100%',
+              padding: '0.5rem',
+              marginTop: '0.25rem',
               borderRadius: '0.375rem',
-              fontWeight: '600',
-              cursor: 'pointer',
+              border: '1px solid #cbd5e0',
               fontSize: '1rem',
+              boxSizing: 'border-box',
             }}
-          >
-            Add Blog
-          </button>
+          />
         </div>
+
+        <div>
+          <label htmlFor="newBlogContent" style={{ fontWeight: 600, color: '#4a5568' }}>Content</label>
+          <textarea
+            id="newBlogContent"
+            placeholder="Write your blog content here..."
+            value={newBlogContent}
+            onChange={(e) => setNewBlogContent(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '0.5rem',
+              marginTop: '0.25rem',
+              borderRadius: '0.375rem',
+              border: '1px solid #cbd5e0',
+              fontSize: '1rem',
+              resize: 'vertical',
+              minHeight: '120px',
+              boxSizing: 'border-box',
+            }}
+          />
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <input
+            id="newBlogPublished"
+            type="checkbox"
+            checked={newBlogPublished}
+            onChange={(e) => setNewBlogPublished(e.target.checked)}
+            style={{ width: '16px', height: '16px' }}
+          />
+          <label htmlFor="newBlogPublished" style={{ fontWeight: 500, color: '#4a5568' }}>Mark as Published</label>
+        </div>
+
+        <button
+          onClick={addBlog}
+          style={{
+            alignSelf: 'flex-start',
+            padding: '0.6rem 1rem',
+            backgroundColor: '#3182ce',
+            color: 'white',
+            border: 'none',
+            borderRadius: '0.375rem',
+            fontWeight: '600',
+            cursor: 'pointer',
+            fontSize: '1rem',
+          }}
+        >
+          Add Blog
+        </button>
       </div>
 
       {/* Blogs List */}
@@ -949,11 +931,7 @@ const BlogsContent = ({
         {blogs.length === 0 ? (
           <p style={{ color: '#718096', fontStyle: 'italic' }}>No blog posts added yet.</p>
         ) : (
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem',
-          }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {blogs.map((b, i) => (
               <div
                 key={i}
@@ -1047,9 +1025,10 @@ const BlogsContent = ({
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
+
 
 
 
