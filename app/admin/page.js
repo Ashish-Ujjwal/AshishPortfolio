@@ -19,33 +19,87 @@ import { DashboardContent, ProjectsContent, SkillsContent, EmploymentHistoryCont
 // --- DUMMY DATA ---
 
 const initialProjects = [
-  { id: 'proj1', title: 'E-commerce Redesign', status: 'In Progress' },
-  { id: 'proj2', title: 'Mobile App Launch', status: 'Completed' },
+    {
+        id: 1,
+        title: 'E-commerce Redesign',
+        github: 'https://github.com/yourusername/ecommerce-redesign',
+        live: 'https://ecommerce-redesign.example.com',
+        imgUrl: 'https://via.placeholder.com/300x200?text=E-commerce+Redesign',
+    },
+    {
+        id: 2,
+        title: 'Mobile App Launch',
+        github: 'https://github.com/yourusername/mobile-app-launch',
+        live: 'https://mobile-app-launch.example.com',
+        imgUrl: 'https://via.placeholder.com/300x200?text=Mobile+App+Launch',
+    },
+    {
+        id: 3,
+        title: 'Portfolio Website',
+        github: 'https://github.com/yourusername/portfolio',
+        live: 'https://yourname.dev',
+        imgUrl: 'https://via.placeholder.com/300x200?text=Portfolio+Website',
+    },
 ];
 
 const initialSkills = [
-  { id: 'skill1', name: 'React.js', level: 'Advanced' },
-  { id: 'skill2', name: 'Node.js', level: 'Intermediate' },
+    { id: 'skill1', name: 'React.js', level: 'Advanced' },
+    { id: 'skill2', name: 'Node.js', level: 'Intermediate' },
 ];
 
 const initialEmploymentHistory = [
-  { id: 'emp1', title: 'Senior Developer', company: 'Tech Solutions', duration: '2020-Present' },
-  { id: 'emp2', title: 'Junior Developer', company: 'Web Innovators', duration: '2018-2020' },
+    { id: '1', title: 'Senior Developer', company: 'Tech Solutions', duration: '2020-Present' },
+    { id: '2', title: 'Junior Developer', company: 'Web Innovators', duration: '2018-2020' },
 ];
 
 const initialTestimonials = [
-  { id: 'test1', text: 'Great service!', author: 'Client A', approved: true },
-  { id: 'test2', text: 'Very professional.', author: 'Client B', approved: false },
+    {
+        id: 1,
+        text: 'Working with this team was an exceptional experience. They understood our needs clearly and delivered ahead of schedule with amazing quality.',
+        author: 'Client A',
+        approved: true,
+    },
+    {
+        id: 2,
+        text: 'The professionalism and attention to detail exceeded our expectations. I would highly recommend their services to anyone looking for reliable results.',
+        author: 'Client B',
+        approved: false,
+    },
 ];
 
 const initialBlogs = [
-  { id: 'blog1', title: 'Getting Started with React Hooks', content: '...', published: true },
-  { id: 'blog2', title: 'Advanced CSS Techniques', content: '...', published: false },
+    { id: 'blog1', title: 'Getting Started with React Hooks', content: '...', published: true },
+    { id: 'blog2', title: 'Advanced CSS Techniques', content: '...', published: false },
 ];
 
 // Custom Modal Component for confirmations/messages (replaces alert/confirm)
 const Modal = ({ show, title, message, onConfirm, onCancel, type = 'info' }) => {
     if (!show) return null;
+
+    const colors = {
+        info: {
+            border: '#3b82f6',
+            title: '#1d4ed8',
+            button: '#3b82f6',
+        },
+        success: {
+            border: '#22c55e',
+            title: '#15803d',
+            button: '#22c55e',
+        },
+        error: {
+            border: '#ef4444',
+            title: '#b91c1c',
+            button: '#ef4444',
+        },
+        confirm: {
+            border: '#f59e0b',
+            title: '#b45309',
+            button: '#f59e0b',
+        },
+    };
+
+    const theme = colors[type] || colors.info;
 
     const modalStyles = {
         overlay: {
@@ -54,46 +108,51 @@ const Modal = ({ show, title, message, onConfirm, onCancel, type = 'info' }) => 
             left: 0,
             right: 0,
             bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.6)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 1000,
         },
         modalContent: {
+            backgroundColor: 'white',
+            border: `4px solid ${theme.border}`,
+            borderRadius: '12px',
             padding: '2rem',
-            borderRadius: '8px',
-            boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
             maxWidth: '400px',
             width: '90%',
-            color: 'white',
             textAlign: 'center',
+            boxShadow: '0 15px 40px rgba(0, 0, 0, 0.3)',
         },
         modalTitle: {
             fontSize: '1.5rem',
-            marginBottom: '1rem',
             fontWeight: 'bold',
-            color: type === 'error' ? '#ef4444' : type === 'success' ? '#22c55e' : 'white',
+            marginBottom: '1rem',
+            color: theme.title,
         },
         modalMessage: {
             fontSize: '1rem',
             marginBottom: '1.5rem',
+            color: '#333',
         },
         buttonContainer: {
             display: 'flex',
             justifyContent: 'center',
             gap: '1rem',
+            marginTop: '1rem',
         },
         button: {
             padding: '0.6rem 1.2rem',
-            borderRadius: '5px',
+            borderRadius: '8px',
             border: 'none',
             cursor: 'pointer',
-            fontSize: '0.9rem',
             fontWeight: '600',
-            transition: 'background-color 0.2s',
+            fontSize: '0.9rem',
+            color: 'white',
+            transition: 'background-color 0.2s, transform 0.2s',
         },
         confirmButton: {
-            backgroundColor: type === 'confirm' ? '#ef4444' : '#3b82f6', // Red for confirm delete, blue otherwise
+            backgroundColor: theme.button,
         },
         cancelButton: {
             backgroundColor: '#6b7280',
@@ -122,10 +181,9 @@ const Modal = ({ show, title, message, onConfirm, onCancel, type = 'info' }) => 
                             Cancel
                         </button>
                     )}
-                    {/* For info/success/error types where only a close action is needed */}
                     {!onConfirm && !onCancel && (
                         <button
-                            onClick={() => { onConfirm && onConfirm(); }} // Call onConfirm if it exists, to close the modal
+                            onClick={() => { onConfirm && onConfirm(); }}
                             style={{ ...modalStyles.button, ...modalStyles.confirmButton }}
                         >
                             Close
@@ -138,27 +196,20 @@ const Modal = ({ show, title, message, onConfirm, onCancel, type = 'info' }) => 
 };
 
 
+
 // Shared styles object
 const styles = {
-    topbar: {
-        width: '100%',
-        padding: '0.75rem 1.5rem',
-        borderBottom: '1px solid #333',
-        position: 'sticky',
-        top: 0,
-        zIndex: 1000,
-    },
     topbarNav: {
         display: 'flex',
         flexDirection: 'row',
         gap: '1rem',
         listStyle: 'none',
-        margin: 0,
-        padding: 0,
-        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap', // for responsiveness
-        // borderRadius: '5px',
+        borderRadius: '5px',
+        backgroundColor: "lightgreen"
     },
     // Overall container for the entire admin panel
     container: {
@@ -167,35 +218,15 @@ const styles = {
         height: "100vh", // Full screen height
         overflow: "hidden", // Prevent unwanted scroll
     },
-    // Top navigation bar styling
-    topbar: {
-        padding: '1rem 2rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        height: '60px', // Fixed height for a consistent top bar
-        borderBottom: '1px solid #1a252f',
-        borderRadius: '0.5rem 0.5rem 0 0', // Rounded top corners
-    },
-    topbarTitle: {
-        fontSize: '1.5rem',
-        fontWeight: 'bold',
-    },
-    topbarUser: {
-        fontSize: '0.9rem', // Smaller font for userId
-        opacity: '0.9',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.5rem',
-        wordBreak: 'break-all', // Ensure long IDs wrap
-    },
+
+
     // Area containing the sidebar and the main content
     mainContentArea: {
         display: 'flex',
         flexGrow: 1, // Allows it to expand and fill available vertical space
         height: 'calc(100vh - 60px)', // Explicitly set height based on viewport minus topbar
     },
-    
+
     // Main content area styling
     content: {
         flex: 1,
@@ -324,24 +355,18 @@ const styles = {
         padding: '0.8rem 1.5rem',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between', // Distribute items
-        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+        justifyContent: 'flex-start', // Distribute items
+        // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+        backgroundColor: 'lightyellow',
         position: 'sticky', // Makes it stick to the top
         top: 0,
         zIndex: 1000, // Ensures it's always on top
         flexWrap: 'wrap', // Allow wrapping on very small screens if needed
     },
-    topbarBrand: {
-        fontSize: '1.8rem',
-        fontWeight: 'bold',
-        textDecoration: 'none',
-        padding: '0.5rem 0',
-    },
     menuToggle: {
         // These are base styles; media query in component handles display
         fontSize: '1.8rem', // Slightly larger for better tap target
         background: 'none',
-        border: 'none',
         cursor: 'pointer',
         padding: '0.5rem 0.8rem',
         borderRadius: '5px',
@@ -455,17 +480,19 @@ const MiniTopBar = ({ activeSection, setActiveSection, styles }) => {
     return (
         <nav style={styles.topbar}>
             {/* Hamburger button */}
-            <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                style={styles.menuToggle}
-                aria-expanded={menuOpen}
-                aria-controls="topbar-navigation"
-                className={`menu-toggle ${menuOpen ? 'open' : ''}`}
-            >
-                <div className="bar"></div>
-                <div className="bar"></div>
-                <div className="bar"></div>
-            </button>
+            <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}>
+                <button
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    style={{ ...styles.menuToggle }}
+                    aria-expanded={menuOpen}
+                    aria-controls="topbar-navigation"
+                    className={`menu-toggle ${menuOpen ? 'open' : ''}`}
+                >
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                </button>
+            </div>
 
             {/* Navigation Items */}
             <ul
@@ -500,17 +527,16 @@ const MiniTopBar = ({ activeSection, setActiveSection, styles }) => {
                     align-item: center;
                     gap: 4px;
                     width: 40px;
-                    height: 28px;
+                    height: 32px;
                     border: none;
                     cursor: pointer;
-                    padding: 0;
                     z-index: 1100;
                 }
                 .menu-toggle .bar {
                     width: 15px;
                     height: 3px;
                     color: black;
-                    background-color: black;
+                    background-color: red;
                     transition: all 0.3s ease;
                 }
                 .menu-toggle.open .bar:nth-child(1) {
@@ -541,9 +567,8 @@ const MiniTopBar = ({ activeSection, setActiveSection, styles }) => {
                         top: 100%;
                         left: 0;
                         right: 0;
-                        background-color: #1c1c24;
+                        background-color: lightyellow;
                         flex-direction: column;
-                        align-items: flex-start;
                         padding: 1rem;
                         display: none;
                         transition: max-height 0.3s ease-in-out;
