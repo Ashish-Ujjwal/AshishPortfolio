@@ -6,7 +6,7 @@ const Publications = () => {
 			<div className="col-lg-12">
 				{/* title */}
 				<h5 className="trm-mb-40 trm-title-with-divider">
-					Latest Publications <span data-number={10} />
+					Latest Publications <span data-number={8} />
 				</h5>
 			</div>
 			<div className="col-lg-6">

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaSave, FaTimes } from "react-icons/fa";
+import { db, storage } from "@/lib/firebase";
+
 
 
 // Shared styles object
@@ -180,66 +182,114 @@ const styles = {
 };
 
 // --- Section Components (Moved from renderContent switch cases) ---
-
 const DashboardContent = ({ projects, skills, employmentHistory, testimonials, blogs }) => (
-  <>
-    <p style={{ textAlign: "justify" }}>Welcome to your admin dashboard Below is a detailed summary of your site's key activities and entries.</p>
+  <div style={{ padding: '2px', fontFamily: 'sans-serif', lineHeight: 1.6 }}>
+    <p style={{ textAlign: "justify", marginBottom: '2rem', fontSize: '1rem' }}>
+      👋 Welcome to your <strong>Admin Dashboard</strong>. Below is a detailed overview of your site's key activities and entries.
+    </p>
 
-    {/* Projects */}
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1rem', margin: '15px' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>📁 Projects ({projects.length})</h4>
-      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', listStyle: 'disc' }}>
-        {projects.map((p, i) => (
-          <li key={i}><strong>{p.title}</strong> — {p.status?.slice(0, 60) || 'No description provided'}</li>
-        ))}
-      </ul>
-    </div>
+    {/* Section Reusable Card Style */}
+    <div style={{ display: 'grid', gap: '2rem' }}>
+      {/* Projects */}
+      <section style={cardStyle}>
+        <h3 style={titleStyle}>📁 Projects ({projects.length})</h3>
+        <ul style={listStyle}>
+          {projects.map((p, i) => (
+            <li key={i} style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+              <strong>{p.title}</strong> — {p.github}
+            </li>
+          ))}
+        </ul>
+      </section>
 
-    {/* Skills */}
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem', margin: '15px' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>🛠️ Skills ({skills.length})</h4>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', fontSize: '0.95rem', justifyContent: 'center' }}>
-        {skills.map((s, i) => (
-          <span key={i} style={{ padding: '0.25rem 0.75rem', borderRadius: '9999px' }}>{s.name}</span>
-        ))}
-      </div>
-    </div>
+      {/* Skills */}
+      <section style={cardStyle}>
+        <h3 style={titleStyle}>🛠️ Skills ({skills.length})</h3>
+        <div style={skillContainerStyle}>
+          {skills.map((s, i) => (
+            <span key={i} style={skillBadgeStyle}>{s.name}</span>
+          ))}
+        </div>
+      </section>
 
-    {/* Employment History */}
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem', margin: '15px' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>🏢 Employment History ({employmentHistory.length})</h4>
-      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', listStyle: 'disc' }}>
-        {employmentHistory.map((job, i) => (
-          <li key={i}>
-            <strong>{job.title}</strong> at <em>{job.company}</em> ({job.duration})
-          </li>
-        ))}
-      </ul>
-    </div>
+      {/* Employment History */}
+      <section style={cardStyle}>
+        <h3 style={titleStyle}>🏢 Employment History ({employmentHistory.length})</h3>
+        <ul style={listStyle}>
+          {employmentHistory.map((job, i) => (
+            <li key={i}>
+              <strong>{job.title}</strong> at <em>{job.company}</em> ({job.duration})
+            </li>
+          ))}
+        </ul>
+      </section>
 
-    {/* Testimonials */}
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem', margin: '15px' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>💬 Testimonials ({testimonials.length})</h4>
-      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', listStyle: 'disc' }}>
-        {testimonials.map((t, i) => (
-          <li key={i}><strong>{t.author}</strong>: {t.text?.slice(0, 60) || 'No message'}... {t.approved ? '✅ Approved' : '⏳ Pending'}</li>
-        ))}
-      </ul>
-    </div>
+      {/* Testimonials */}
+      <section style={cardStyle}>
+        <h3 style={titleStyle}>💬 Testimonials ({testimonials.length})</h3>
+        <ul style={listStyle}>
+          {testimonials.map((t, i) => (
+            <li key={i}>
+              <strong>{t.author}</strong>: {t.text?.slice(0, 100) || 'No message'}... <br />
+              {t.approved ? '✅ Approved' : '⏳ Pending'}
+            </li>
+          ))}
+        </ul>
+      </section>
 
-    {/* Blogs */}
-    <div style={{ border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '1rem 1.25rem', margin: '15px' }}>
-      <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>📝 Blog Posts ({blogs.length})</h4>
-      <ul style={{ marginLeft: '1rem', fontSize: '0.95rem', listStyle: 'disc' }}>
-        {blogs.map((b, i) => (
-          <li key={i}>
-            <strong>{b.title}</strong> — {b.published ? '📢 Published' : '📝 Draft'} | {b.createdAt || 'No date'}
-          </li>
-        ))}
-      </ul>
+      {/* Blogs */}
+      <section style={cardStyle}>
+        <h3 style={titleStyle}>📝 Blog Posts ({blogs.length})</h3>
+        <ul style={listStyle}>
+          {blogs.map((b, i) => (
+            <li key={i}>
+              <strong>{b.title}</strong> — {b.published ? '📢 Published' : '📝 Draft'} | {b.createdAt || 'No date'}
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
-  </>
+  </div>
 );
+
+// Reusable style objects
+const cardStyle = {
+  background: '#f9f9f9',
+  padding: '1.5rem',
+  borderRadius: '1rem',
+  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+  transition: '0.3s ease',
+};
+
+const titleStyle = {
+  fontSize: '1.25rem',
+  marginBottom: '0.75rem',
+  fontWeight: '600',
+  color: '#333',
+};
+
+const listStyle = {
+  fontSize: '0.95rem',
+  paddingLeft: '1.2rem',
+  listStyleType: 'disc',
+  color: '#444',
+};
+
+const skillContainerStyle = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '0.5rem',
+  justifyContent: 'flex-start',
+};
+
+const skillBadgeStyle = {
+  backgroundColor: '#e0f7fa',
+  color: '#006064',
+  padding: '0.4rem 0.8rem',
+  borderRadius: '9999px',
+  fontSize: '0.85rem',
+  fontWeight: '500',
+};
 
 
 
@@ -575,32 +625,41 @@ const EmploymentHistoryContent = ({
     <p style={{ textAlign: "justify" }}>Welcome to your admin dashboard Below is a detailed summary of your site's key activities and entries.</p>
 
     {/* Add Form */}
-    <div style={{ background: "#fff", border: "1px solid #e2e8f0", padding: "1rem", margin: '15px 0', borderRadius: "0.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <input
-        type="text"
-        placeholder="Job Title"
-        value={newEmploymentTitle}
-        onChange={(e) => setNewEmploymentTitle(e.target.value)}
-        style={{ padding: "0.5rem", border: "1px solid #cbd5e0", borderRadius: "0.375rem" }}
-      />
-      <input
-        type="text"
-        placeholder="Company"
-        value={newEmploymentCompany}
-        onChange={(e) => setNewEmploymentCompany(e.target.value)}
-        style={{ padding: "0.5rem", border: "1px solid #cbd5e0", borderRadius: "0.375rem" }}
-      />
-      <input
-        type="text"
-        placeholder="Duration (e.g., Jan 2022 – Present)"
-        value={newEmploymentDuration}
-        onChange={(e) => setNewEmploymentDuration(e.target.value)}
-        style={{ padding: "0.5rem", border: "1px solid #cbd5e0", borderRadius: "0.375rem" }}
-      />
+    <div style={{ border: "1px solid #e2e8f0", padding: "1rem", margin: '15px 0', borderRadius: "0.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <div>
+        <label htmlFor="newEmpName" style={{ fontWeight: 500, display: 'block' }}>Job Title</label>
+        <input
+          type="text"
+          placeholder="Job Title"
+          value={newEmploymentTitle}
+          onChange={(e) => setNewEmploymentTitle(e.target.value)}
+          style={{ width: '100%', padding: "0.5rem", border: "1px solid #cbd5e0", borderRadius: "0.375rem" }}
+        />
+      </div>
+      <div>
+        <label htmlFor="newEmpName" style={{ fontWeight: 500, display: 'block' }}>Company</label>
+        <input
+          type="text"
+          placeholder="Company"
+          value={newEmploymentCompany}
+          onChange={(e) => setNewEmploymentCompany(e.target.value)}
+          style={{ width: '100%', padding: "0.5rem", border: "1px solid #cbd5e0", borderRadius: "0.375rem" }}
+        />
+      </div>
+      <div>
+        <label htmlFor="newEmpName" style={{ fontWeight: 500, display: 'block' }}>Duration</label>
+        <input
+          type="text"
+          placeholder="Duration (e.g., Jan 2022 – Present)"
+          value={newEmploymentDuration}
+          onChange={(e) => setNewEmploymentDuration(e.target.value)}
+          style={{ width: '100%', padding: "0.5rem", border: "1px solid #cbd5e0", borderRadius: "0.375rem" }}
+        />
+      </div>
 
       <button
         onClick={addEmployment}
-        style={{ alignSelf: "flex-end", background: "#4caf50", color: "#fff", padding: "0.55rem 1rem", border: "none", borderRadius: "0.375rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem", fontWeight: 600 }}
+        style={{ width: '100%', justifyContent: 'center', background: "#4caf50", color: "#fff", padding: "0.55rem 1rem", border: "none", borderRadius: "0.375rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem", fontWeight: 600 }}
       >
         <FaSave /> Add
       </button>
@@ -608,11 +667,11 @@ const EmploymentHistoryContent = ({
 
     {/* List */}
     {employmentHistory.length === 0 ? (
-      <p style={{ color: "#718096" }}>No employment history added yet.</p>
+      <p style={{ color: "#718096" }}>No Employment History</p>
     ) : (
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         {employmentHistory.map((entry) => (
-          <div key={entry.id} style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "0.5rem", padding: "1rem", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
+          <div key={entry.id} style={{ border: "1px solid #e2e8f0", borderRadius: "0.5rem", padding: "1rem", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
 
             {/* EDIT MODE */}
             {editingEmployment?.id === entry.id ? (
@@ -658,16 +717,16 @@ const EmploymentHistoryContent = ({
                 <p style={{ margin: "0 0 0.25rem 0" }}><strong>Company:</strong> {entry.company}</p>
                 <p style={{ margin: "0 0 0.5rem 0", color: "#4a5568" }}><strong>Duration:</strong> {entry.duration}</p>
 
-                <div style={{ display: "flex", gap: "0.5rem", justifyContent: "flex-end" }}>
+                 <div style={{ display: "flex", gap: "0.5rem" }}>
                   <button
                     onClick={() => setEditingEmployment(entry)}
-                    style={{ background: "#3182ce", color: "#fff", padding: "0.4rem 0.75rem", border: "none", borderRadius: "0.375rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem" }}
+                    style={{ flex: 1, background: "#3b82f6", color: "#fff", padding: "0.5rem", border: "none", borderRadius: "0.375rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem" }}
                   >
                     <FaEdit /> Edit
                   </button>
                   <button
                     onClick={() => deleteEmployment(entry.id)}
-                    style={{ background: "#e53e3e", color: "#fff", padding: "0.4rem 0.75rem", border: "none", borderRadius: "0.375rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem" }}
+                    style={{ flex: 1, background: "#e53e3e", color: "#fff", padding: "0.5rem", border: "none", borderRadius: "0.375rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem" }}
                   >
                     <FaTrash /> Delete
                   </button>

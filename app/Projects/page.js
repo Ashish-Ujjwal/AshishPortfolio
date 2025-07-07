@@ -3,11 +3,17 @@ import { context } from "@/context/context";
 import Layout from "@/layout/Layout";
 import { useContext, useEffect } from "react";
 
+const convertDropboxLink = (url) => {
+  if (!url.includes("dropbox.com")) return url;
+  return url.replace("www.dropbox.com", "dl.dropboxusercontent.com").replace("?dl=0", "");
+};
+
 const portfolioItems = [
 	{
 		id: 1,
 		title: "Movie Recommendation",
 		img: "/img/AshPortfolio/MovieDB.png",
+		// img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRefU8VLFzy_RpztsvhVH8eM3FcbGdHuo5Gpg&s",
 		liveLink: "https://recommendation-engine-movie-web.vercel.app",
 		githubLink: "https://github.com/AshishUjjwal/Recommendation_Engine_Movie_Web"
 	},
@@ -88,7 +94,8 @@ const Index = () => {
 					{/* portfolio item */}
 					<a
 						data-fancybox="portfolio"
-						href={item.img}
+						// href={item.img}
+						href={convertDropboxLink(item.img)}
 						className="trm-portfolio-item trm-scroll-animation"
 						data-scroll
 						data-scroll-offset={40}
