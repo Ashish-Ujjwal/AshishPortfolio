@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { context } from '@/context/context';
 import Layout from '@/layout/Layout';
-import { Plus, Edit, Trash2, Eye, Save, X, Menu, BarChart3, FolderOpen, Brain, Briefcase, MessageSquare, PenTool, CheckCircle, XCircle } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, Save, X, Menu, BarChart3, FolderOpen, Brain, Briefcase, MessageSquare, PenTool, CheckCircle, XCircle, Heart } from 'lucide-react';
 import { Dashboard } from './Dashboard';
 import { Projects } from './Projects';
 import { Testimonials } from './Testimonials';
@@ -102,22 +102,23 @@ const App = () => {
 
     return (
         <Layout noSidebar>
-            <div style={{ minHeight: '100vh', backgroundColor: '#f3f4f6', fontFamily: 'Inter, sans-serif', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ minHeight: '100vh', backgroundColor: '#f3f4f6', fontFamily: 'Inter, sans-serif', display: 'flex', borderRadius: '10px', flexDirection: 'column' }}>
                 {/* Top Bar for Mobile */}
                 {!isLargeScreen && (
                     <div ref={topBarRef} style={{
                         backgroundColor: '#fff', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', // bg-white shadow-sm
                         padding: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', // p-4 flex items-center justify-between
-                        position: 'sticky', top: 0, zIndex: 40, borderBottom: '1px solid #e5e7eb' // sticky top-0 z-40 border-b border-gray-200
+                        position: 'sticky', top: 0, zIndex: 40, borderBottom: '1px solid #e5e7eb', // sticky top-0 z-40 border-b border-gray-200
+                        borderRadius: '10px',
                     }}>
-                        <h1 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#1f2937' }}>Portfolio Admin</h1> {/* text-xl font-bold text-gray-800 */}
+                        <h1 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#1f2937' }}>PORTFOLIO ADMIN</h1> {/* text-xl font-bold text-gray-800 */}
                         <button
                             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                             style={{
                                 color: '#4b5563', // text-gray-600
                                 padding: '0.5rem', borderRadius: '0.375rem', // p-2 rounded-md
                                 transition: 'color 200ms, background-color 200ms', // hover:text-gray-800 hover:bg-gray-100
-                                backgroundColor: 'transparent', border: 'none', cursor: 'pointer'
+                                backgroundColor: 'transparent', border: 'none', cursor: 'pointer',
                             }}
                             onMouseEnter={(e) => { e.currentTarget.style.color = '#1f2937'; e.currentTarget.style.backgroundColor = '#f3f4f6'; }}
                             onMouseLeave={(e) => { e.currentTarget.style.color = '#4b5563'; e.currentTarget.style.backgroundColor = 'transparent'; }}
@@ -151,10 +152,11 @@ const App = () => {
                         padding: '1.5rem', display: 'flex', flexDirection: 'column', // p-6 flex flex-col
                         transform: isLargeScreen ? 'translateY(0)' : (isSidebarOpen ? 'translateY(0)' : 'translateY(-100%)'), // transform for top-down animation
                         transition: 'transform 300ms ease-in-out', // transition-transform duration-300 ease-in-out
-                        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)' // shadow-lg
+                        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)', // shadow-lg
+                        margin: '80px 0 0 0'
                     }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}> {/* flex justify-between items-center mb-8 */}
-                            <h1 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#fff' }}>Portfolio Admin</h1> {/* text-2xl font-bold text-white */}
+                            <h1 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#fff' }}>PORTFOLIO</h1> {/* text-2xl font-bold text-white */}
                             {!isLargeScreen && (
                                 <button
                                     onClick={() => setIsSidebarOpen(false)}
@@ -190,7 +192,7 @@ const App = () => {
                                             color: activeSection === item.section ? '#fff' : '#e5e7eb', // text-white : text-gray-300
                                             boxShadow: activeSection === item.section ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' : 'none', // shadow-md
                                             border: 'none', cursor: 'pointer',
-                                            marginTop: index > 0 ? '0.5rem' : '0' // space-y-2
+                                            // marginTop: index > 0 ? '0.5rem' : '0' // space-y-2
                                         }}
                                         onMouseEnter={(e) => {
                                             if (activeSection !== item.section) {
@@ -211,10 +213,22 @@ const App = () => {
                                 );
                             })}
                         </nav>
-                        <div style={{ marginTop: 'auto', paddingTop: '1.5rem', borderTop: '1px solid #374151', color: '#9ca3af', fontSize: '0.875rem' }}> {/* mt-auto pt-6 border-t border-gray-700 text-gray-400 text-sm */}
-                            <p>&copy; 2024 Portfolio Admin</p>
-                            <p>Version 1.0</p>
+                        <div style={{
+                            marginTop: 'auto',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            paddingTop: '1.5rem',
+                            borderTop: '1px solid #374151',
+                            color: '#9ca3af',
+                            fontSize: '0.875rem',
+                            display: 'flex',           // ✅ Flex container
+                            flexDirection: 'column',   // ✅ Stack <p> elements vertically
+                            textAlign: 'center'        // ✅ Center text inside <p>
+                        }}>
+                            <p>&copy; Made With <span style={{ fontSize: '0.85rem' }}>❤️</span> By Ashish</p>
+                            <p>2025 - Version 1.0</p>
                         </div>
+
                     </aside>
 
                     {/* Main Content Area */}
