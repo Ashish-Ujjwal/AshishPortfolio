@@ -75,7 +75,7 @@ export const Blogs = ({ data, setData }) => {
         backgroundColor: '#fff', borderRadius: '0.5rem', // bg-white rounded-lg
         boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', // shadow-sm
         border: '1px solid #e5e7eb', // border border-gray-200
-        maxHeight: '400px', // Fixed height for scrolling
+        maxHeight: '450px', // Fixed height for scrolling
         overflowY: 'auto' // Enable vertical scrolling
       }}>
         <div style={{ overflowX: 'auto' }}> {/* overflow-x-auto */}

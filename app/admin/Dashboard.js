@@ -5,9 +5,9 @@ import { Plus, Edit, Trash2, Eye, Save, X, Menu, BarChart3, FolderOpen, Brain, B
 // Dashboard Component
 export const Dashboard = ({ data }) => {
     const stats = [
-        { title: 'Total Projects', value: data.projects.length, color: '#3b82f6', icon: FolderOpen }, // bg-blue-500
+        { title: 'Projects', value: data.projects.length, color: '#3b82f6', icon: FolderOpen }, // bg-blue-500
         { title: 'Skills', value: data.skills.length, color: '#22c55e', icon: Brain }, // bg-green-500
-        { title: 'Employment History', value: data.employment.length, color: '#a855f7', icon: Briefcase }, // bg-purple-500
+        { title: 'Employment', value: data.employment.length, color: '#a855f7', icon: Briefcase }, // bg-purple-500
         { title: 'Testimonials', value: data.testimonials.length, color: '#f97316', icon: MessageSquare }, // bg-orange-500
         { title: 'Blog Posts', value: data.blogs.length, color: '#ec4899', icon: PenTool }, // bg-pink-500
     ];
@@ -45,7 +45,8 @@ export const Dashboard = ({ data }) => {
                 display: 'grid',
                 gridTemplateColumns: getGridTemplateColumns(),
                 gap: '1rem', // gap-4
-                marginBottom: '1.5rem' // for space-y-6
+                marginBottom: '1.5rem', // for space-y-6
+                margin: '0 0 10 10',
             }}>
                 {stats.map((stat, index) => {
                     const Icon = stat.icon;

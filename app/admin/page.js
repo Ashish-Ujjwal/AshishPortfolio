@@ -102,7 +102,7 @@ const App = () => {
 
     return (
         <Layout noSidebar>
-            <div style={{ minHeight: '100vh', backgroundColor: '#f3f4f6', fontFamily: 'Inter, sans-serif', display: 'flex', borderRadius: '10px', flexDirection: 'column' }}>
+            <div style={{ minHeight: '80vh',  fontFamily: 'Inter, sans-serif', display: 'flex', backgroundColor: '#fff', flexDirection: 'column' }}>
                 {/* Top Bar for Mobile */}
                 {!isLargeScreen && (
                     <div ref={topBarRef} style={{
@@ -146,17 +146,17 @@ const App = () => {
                         position: isLargeScreen ? 'relative' : 'fixed', // lg:relative : fixed
                         top: isLargeScreen ? '0' : `${topBarHeight}px`, // Adjusted top for mobile
                         left: 0, right: 0, // Full width on mobile
-                        height: 'min-content', // Adjust height to content
+                        // height: 'min-content', // Adjust height to content
+                        height: '82vh',
                         zIndex: 50, width: isLargeScreen ? '16rem' : '100%', // w-64, full width on mobile
                         backgroundColor: '#1f2937', color: '#fff', // bg-gray-800 text-white
                         padding: '1.5rem', display: 'flex', flexDirection: 'column', // p-6 flex flex-col
                         transform: isLargeScreen ? 'translateY(0)' : (isSidebarOpen ? 'translateY(0)' : 'translateY(-100%)'), // transform for top-down animation
                         transition: 'transform 300ms ease-in-out', // transition-transform duration-300 ease-in-out
                         boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)', // shadow-lg
-                        margin: '80px 0 0 0'
                     }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}> {/* flex justify-between items-center mb-8 */}
-                            <h1 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#fff' }}>PORTFOLIO</h1> {/* text-2xl font-bold text-white */}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', marginTop: '80px' }}> {/* flex justify-between items-center mb-8 */}
+                            <h1 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#fff',  }}>PORTFOLIO</h1> {/* text-2xl font-bold text-white */}
                             {!isLargeScreen && (
                                 <button
                                     onClick={() => setIsSidebarOpen(false)}
@@ -192,7 +192,8 @@ const App = () => {
                                             color: activeSection === item.section ? '#fff' : '#e5e7eb', // text-white : text-gray-300
                                             boxShadow: activeSection === item.section ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' : 'none', // shadow-md
                                             border: 'none', cursor: 'pointer',
-                                            // marginTop: index > 0 ? '0.5rem' : '0' // space-y-2
+                                            marginTop: index > 0 ? '0.5rem' : '0', // space-y-2
+                                            marginBottom: index > 0 ? '0.5rem' : '0' // space-y-2
                                         }}
                                         onMouseEnter={(e) => {
                                             if (activeSection !== item.section) {
@@ -214,7 +215,6 @@ const App = () => {
                             })}
                         </nav>
                         <div style={{
-                            marginTop: 'auto',
                             alignItems: 'center',
                             justifyContent: 'center',
                             paddingTop: '1.5rem',
@@ -225,14 +225,14 @@ const App = () => {
                             flexDirection: 'column',   // ✅ Stack <p> elements vertically
                             textAlign: 'center'        // ✅ Center text inside <p>
                         }}>
-                            <p>&copy; Made With <span style={{ fontSize: '0.85rem' }}>❤️</span> By Ashish</p>
+                            <p>&copy; Made with <span style={{ fontSize: '0.85rem' }}>❤️</span> by Ashish</p>
                             <p>2025 - Version 1.0</p>
                         </div>
 
                     </aside>
 
                     {/* Main Content Area */}
-                    <main style={{ flex: 1, padding: isLargeScreen ? '2rem' : '1.5rem', overflowY: 'auto' }}> {/* flex-1 p-6 lg:p-8 overflow-y-auto */}
+                    <main style={{ flex: 1, padding: isLargeScreen ? '2rem' : '1rem', overflowY: 'auto' }}> {/* flex-1 p-6 lg:p-8 overflow-y-auto */}
                         {renderSection()}
                     </main>
                 </div>

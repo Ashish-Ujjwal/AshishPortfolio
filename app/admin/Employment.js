@@ -52,12 +52,12 @@ export const Employment = ({ data, setData }) => {
   return (
     <div style={{}}> {/* space-y-6 */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}> {/* flex justify-between items-center */}
-        <h2 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#1f2937' }}>Employment History</h2> {/* text-2xl font-bold text-gray-800 */}
+        <h2 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#1f2937' }}>Employment</h2> {/* text-2xl font-bold text-gray-800 */}
         <button
           onClick={handleAdd}
           style={{
             backgroundColor: '#2563eb', color: '#fff', // bg-blue-600 text-white
-            padding: '0.5rem 1rem', borderRadius: '0.5rem', // px-4 py-2 rounded-lg
+            padding: '0.5rem 1rem', // px-4 py-2 rounded-lg
             transition: 'background-color 200ms', // hover:bg-blue-700 transition-colors
             display: 'flex', alignItems: 'center', gap: '0.5rem', // flex items-center gap-2
             boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', // shadow-md
@@ -67,15 +67,15 @@ export const Employment = ({ data, setData }) => {
           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
         >
           <Plus size={20} />
-          Add Employment
+          Add Empl.
         </button>
       </div>
 
       <div style={{
-        backgroundColor: '#fff', borderRadius: '0.5rem', // bg-white rounded-lg
+        backgroundColor: '#fff',  // bg-white rounded-lg
         boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', // shadow-sm
         border: '1px solid #e5e7eb', // border border-gray-200
-        maxHeight: '400px', // Fixed height for scrolling
+        maxHeight: '450px', // Fixed height for scrolling
         overflowY: 'auto' // Enable vertical scrolling
       }}>
         <div style={{ overflowX: 'auto' }}> {/* overflow-x-auto */}
