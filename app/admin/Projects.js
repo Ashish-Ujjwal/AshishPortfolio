@@ -74,7 +74,7 @@ export const Projects = ({ data, setData }) => {
       </div>
 
       <div style={{
-        backgroundColor: '#fff', borderRadius: '0.5rem', // bg-white rounded-lg
+        backgroundColor: '#fff',// bg-white rounded-lg
         boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', // shadow-sm
         border: '1px solid #e5e7eb', // border border-gray-200
         maxHeight: '450px', // Fixed height for scrolling
