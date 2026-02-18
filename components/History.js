@@ -1,5 +1,19 @@
 const employmentHistory = [
   {
+    "role": "Full Stack Developer",
+    "company": "Drema AI",
+    "duration": "Aug. 2025 – Present",
+    "details": [
+      "Architected a Student Learning Platform serving 8,000+ users with scalable cloud infrastructure.",
+      "Improved API response time by 45% through backend optimization and efficient database design using PostgreSQL.",
+      "Developed LLM-powered pipelines for automated question generation and personalized student evaluation.",
+      "Built CI/CD pipelines using GitHub Actions to automate testing and deployments.",
+      "Implemented serverless workflows using AWS Lambda for event-driven processing.",
+      "Deployed and managed containerized backend services on AWS EC2 using Docker and Nginx for production reliability.",
+      "Leveraged AWS Amplify for frontend hosting with automated builds and environment management."
+    ]
+  },
+  {
     role: 'Project Manager',
     company: 'Bridge4Engineers',
     duration: 'Dec. 2024 – Present',
